@@ -7,35 +7,19 @@ public class PathScript : MonoBehaviour
     Transform[] childObjects;
     public List<Transform> childNodeList = new List<Transform>();
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.black;
+	private void Start()
+	{
+		FillNodes();
+	}
 
-        FillNodes();
-
-        for (int i = 0; i < childNodeList.Count; i++)
-        {
-            Vector3 currentPos = childNodeList[i].position;
-            if(i>0)
-            {
-                Vector3 prevPos = childNodeList[i - 1].position;
-                Gizmos.DrawLine(prevPos, currentPos);
-            }
-        }
-    }
-
-    void FillNodes()
+	void FillNodes()
     {
         childNodeList.Clear();
 
-        childObjects = GetComponentsInChildren<Transform>();
-
-        foreach(Transform child in childObjects)
+        foreach(Transform child in transform)
         {
-            if(child != this.transform)
-            {
                 childNodeList.Add(child);
-            }
+            
         }
     }
 }

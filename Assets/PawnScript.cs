@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PawnScript : MonoBehaviour
 {
@@ -44,10 +45,7 @@ public class PawnScript : MonoBehaviour
                     }
                 }
             }
-            while (moveToNextNode(nextPosition))
-            {
-                yield return null;
-            }
+            yield return MoveToNextNode(nextPosition);
             yield return new WaitForSeconds(0.25f);
             steps--;
         }
@@ -55,9 +53,28 @@ public class PawnScript : MonoBehaviour
         isMoving = false;
     }
 
-    bool moveToNextNode(Vector3 goal)
-    {
-        this.transform.position = Vector3.MoveTowards(transform.position, goal, 50 * Time.deltaTime);
-        return goal != (this.transform.position);
-    }
+	IEnumerator MoveToNextNode(Vector3 goal)
+	{
+		Vector3 startPosition = transform.position;
+		float duration = 0.5f;
+
+
+		transform.DOMoveY(goal.y + 0.25f, duration * 0.25f).SetEase(Ease.OutQuad);
+
+
+		transform.DOMove(goal, duration * 0.25f).SetDelay(duration * 0.25f).SetEase(Ease.InOutQuad);
+
+		if ((currentField % 10) == 0)
+		{
+			Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, 90f);
+			transform.DORotateQuaternion(targetRotation, duration * 0.5f).SetDelay(duration * 0.25f).SetEase(Ease.OutQuad);
+		}
+
+		yield return new WaitForSeconds(duration * 0.4f);
+		transform.DOMoveY(goal.y, duration * 0.25f).SetEase(Ease.InQuad);
+
+		
+
+		yield return new WaitForSeconds(duration * 0.25f);
+	}
 }

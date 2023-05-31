@@ -4,32 +4,34 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor;
 using UnityEngine;
 
+[System.Serializable]
+public class Entity
+{
+	public string playerName;
+	public PawnScript[] myPawn;
+	public bool hasTurn;
+	public bool hasWon;
+	public enum PlayerTypes
+	{
+		HUMAN,
+		CPU,
+		OTHER
+	}
+	public PlayerTypes playerType;
+}
+public enum State
+{
+	ROLL_DICE,
+	WAITING,
+	SWITCH_PLAYER
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    [System.Serializable]
-    public class Entity
-    {
-        public string playerName;
-        public PawnScript[] myPawn;
-        public bool hasTurn;
-        public bool hasWon;
-        public enum PlayerTypes
-        {
-            HUMAN,
-            CPU,
-            OTHER
-        }
-        public PlayerTypes playerType;
-    }
+    
     public List<Entity> entities = new List<Entity>();
     
-    public enum State
-    {
-		ROLL_DICE,
-		WAITING,
-        SWITCH_PLAYER
-    }
     public State state;
 
     public int activePlayer;

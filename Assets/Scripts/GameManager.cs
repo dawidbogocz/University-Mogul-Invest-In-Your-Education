@@ -29,6 +29,7 @@ public enum State
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+	
     
     public List<Entity> entities = new List<Entity>();
     
@@ -43,6 +44,13 @@ public class GameManager : MonoBehaviour
     int diceNumber;
 
 	public DiceScript diceScript;
+
+	public CameraScript cameraScript;
+
+	public GameObject Red;
+	public GameObject Green;
+	public GameObject Blue;
+	public GameObject Yellow;
 
 	private void Awake()
 	{
@@ -74,6 +82,82 @@ public class GameManager : MonoBehaviour
     {
 		if (entities[activePlayer].playerType == Entity.PlayerTypes.CPU)
 		{
+			switch (entities[activePlayer].playerName)
+			{
+				case "Red":
+					if (Red.transform.rotation == Quaternion.Euler(0f, 0f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam1);
+					}
+					else if (Red.transform.rotation == Quaternion.Euler(0f, 90f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam2);
+					}
+					else if (Red.transform.rotation == Quaternion.Euler(0f, 180f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam3);
+					}
+					else if (Red.transform.rotation == Quaternion.Euler(0f, 270f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam4);
+					}
+					break;
+				case "Green":
+					if (Green.transform.rotation == Quaternion.Euler(0f, 0f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam1);
+					}
+					else if (Green.transform.rotation == Quaternion.Euler(0f, 90f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam2);
+					}
+					else if (Green.transform.rotation == Quaternion.Euler(0f, 180f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam3);
+					}
+					else if (Green.transform.rotation == Quaternion.Euler(0f, 270f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam4);
+					}
+					break;
+				case "Blue":
+					if (Blue.transform.rotation == Quaternion.Euler(0f, 0f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam1);
+					}
+					else if (Blue.transform.rotation == Quaternion.Euler(0f, 90f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam2);
+					}
+					else if (Blue.transform.rotation == Quaternion.Euler(0f, 180f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam3);
+					}
+					else if (Blue.transform.rotation == Quaternion.Euler(0f, 270f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam4);
+					}
+					break;
+				case "Yellow":
+					if (Yellow.transform.rotation == Quaternion.Euler(0f, 0f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam1);
+					}
+					else if (Yellow.transform.rotation == Quaternion.Euler(0f, 90f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam2);
+					}
+					else if (Yellow.transform.rotation == Quaternion.Euler(0f, 180f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam3);
+					}
+					else if (Yellow.transform.rotation == Quaternion.Euler(0f, 270f, 0f))
+					{
+						cameraScript.SwitchCamera(cameraScript.cam4);
+					}
+					break;
+			}
+
 			switch (state)
 			{
 				case State.ROLL_DICE:
@@ -103,10 +187,29 @@ public class GameManager : MonoBehaviour
 		}
 		if (entities[activePlayer].playerType == Entity.PlayerTypes.HUMAN)
 		{
+			if (entities[activePlayer].playerName == "Red")
+			{
+				cameraScript.SwitchCamera(cameraScript.redCam);
+			}
+			else if (entities[activePlayer].playerName == "Green")
+			{
+				cameraScript.SwitchCamera(cameraScript.greenCam);
+			}
+			else if (entities[activePlayer].playerName == "Blue")
+			{
+				cameraScript.SwitchCamera(cameraScript.blueCam);
+			}
+			else if (entities[activePlayer].playerName == "Yellow")
+			{
+				cameraScript.SwitchCamera(cameraScript.yellowCam);
+			}
+
 			switch (state)
 			{
 				case State.ROLL_DICE:
 					{
+						
+
 						if (turnPossible)
 						{
 							ActivateButton(true);

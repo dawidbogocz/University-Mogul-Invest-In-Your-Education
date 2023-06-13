@@ -76,7 +76,11 @@ public class PawnScript : MonoBehaviour
 
 		if ((currentField % 10) == 0)
 		{
-			Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, 90f);
+			Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 90f, 0f);
+            if (targetRotation.eulerAngles.y == 360f)
+            {
+				targetRotation = Quaternion.Euler(0f, 0f, 0f);
+			}
 			transform.DORotateQuaternion(targetRotation, duration * 0.5f).SetDelay(duration * 0.25f).SetEase(Ease.OutQuad);
 		}
 

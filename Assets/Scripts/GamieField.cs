@@ -40,17 +40,28 @@ public class GamieField : MonoBehaviour
 {
 
     public int id;
-    private int cost;
-    private int rent = cost / 2;
-    private static FieldType type;         
-    private static FieldSubtype subtype = FieldSubtype.None;
+    public int cost;
+    private int rent;
+    private static FieldType type;
+    private static FieldSubtype subtype;
     private static FieldColor color;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         setColor(id);
         setType(id);
+
+        if (type == FieldType.Tax) {
+            if (subtype == FieldSubtype.Retake) {
+                rent = 70 * 6;
+            } else {
+                rent = 400;
+            }
+        } else {
+            rent = cost / 2;
+        }
+
+        Debug.Log("-----\nColor: " + color + "\nType: " + type + "\nSubtype: " + subtype + "\nName: " + gameObject.name + "\nCost: " + cost + "\n-----\n");
     }
 
     // Update is called once per frame
@@ -81,6 +92,8 @@ public class GamieField : MonoBehaviour
         }
     }
     void setType(int id) {
+        subtype = FieldSubtype.None;
+
         if (id == 1 || id == 8 || id == 13 || id == 18 || id == 23 || id == 29 || id == 32 || id == 37) {
             type = FieldType.Dorm;
         } else if (id == 3 || id == 9 || id == 14 || id == 19 || id == 21 || id == 27 || id == 31 || id == 39) {

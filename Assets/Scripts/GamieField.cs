@@ -23,6 +23,19 @@ public enum FieldSubtype {
     Retake
 }
 
+//Enum for the field Color
+public enum FieldColor {
+    Brown,
+    Cyan,
+    Pink,
+    Orange,
+    Red,
+    Yellow,
+    Green,
+    Blue,
+    None
+}
+
 public class GamieField : MonoBehaviour
 {
 
@@ -32,9 +45,12 @@ public class GamieField : MonoBehaviour
     private int rent = cost / 2;
     private static FieldType type;         
     private static FieldSubtype subtype = FieldSubtype.None;
+    private static FieldColor color;
+
     // Start is called before the first frame update
     void Start()
     {
+        setColor(id);
         setType(id);
     }
 
@@ -44,6 +60,27 @@ public class GamieField : MonoBehaviour
         
     }
 
+    void setColor(int id) {
+        if (id == 1 || id == 3) {
+            color = FieldColor.Brown;
+        } else if (id == 6 || id == 8 || id == 9) {
+            color = FieldColor.Cyan;
+        } else if (id == 11 || id == 13 || id == 14) {
+            color = FieldColor.Pink;
+        } else if (id == 16 || id == 18 || id == 19) {
+            color = FieldColor.Orange;
+        } else if (id == 21 || id == 23 || id == 24) {
+            color = FieldColor.Red;
+        } else if (id == 26 || id == 28 || id == 29) {
+            color = FieldColor.Yellow;
+        } else if (id == 31 || id == 33 || id == 34) {
+            color = FieldColor.Green;
+        } else if (id == 37 || id == 39) { 
+            color = FieldColor.Blue;
+        } else {
+            color = FieldColor.None;
+        }
+    }
     void setType(int id) {
         if (id == 1 || id == 8 || id == 13 || id == 18 || id == 23 || id == 29 || id == 32 || id == 37) {
             type = FieldType.Dorm;

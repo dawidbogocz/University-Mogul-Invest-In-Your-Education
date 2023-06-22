@@ -42,14 +42,16 @@ public class GamieField : MonoBehaviour
     public int id;
     public int cost;
     private int rent;
+    private Player owner;
     private static FieldType type;
     private static FieldSubtype subtype;
     private static FieldColor color;
 
     // Start is called before the first frame update
     void Start() {
-        setColor(id);
-        setType(id);
+        owner = null;
+        SetColor(id);
+        SetType(id);
 
         if (type == FieldType.Tax) {
             if (subtype == FieldSubtype.Retake) {
@@ -60,8 +62,6 @@ public class GamieField : MonoBehaviour
         } else {
             rent = cost / 2;
         }
-
-        Debug.Log("-----\nColor: " + color + "\nType: " + type + "\nSubtype: " + subtype + "\nName: " + gameObject.name + "\nCost: " + cost + "\n-----\n");
     }
 
     // Update is called once per frame
@@ -70,7 +70,15 @@ public class GamieField : MonoBehaviour
         
     }
 
-    void setColor(int id) {
+    public Player GetOwner() {
+        return owner;
+    }
+
+    public void SetOwner(Player newOwner) {
+        owner = newOwner;
+    }
+
+    void SetColor(int id) {
         if (id == 1 || id == 3) {
             color = FieldColor.Brown;
         } else if (id == 6 || id == 8 || id == 9) {
@@ -91,7 +99,7 @@ public class GamieField : MonoBehaviour
             color = FieldColor.None;
         }
     }
-    void setType(int id) {
+    void SetType(int id) {
         subtype = FieldSubtype.None;
 
         if (id == 1 || id == 8 || id == 13 || id == 18 || id == 23 || id == 29 || id == 32 || id == 37) {
@@ -125,4 +133,5 @@ public class GamieField : MonoBehaviour
             type = FieldType.Start;
         }
     }
+
 }

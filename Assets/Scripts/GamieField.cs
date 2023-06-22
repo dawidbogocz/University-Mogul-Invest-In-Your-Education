@@ -40,8 +40,7 @@ public class GamieField : MonoBehaviour
 {
 
     public int id;
-    public static string name;
-    public static int cost;
+    private int cost;
     private int rent = cost / 2;
     private static FieldType type;         
     private static FieldSubtype subtype = FieldSubtype.None;

@@ -8,6 +8,7 @@ using UnityEngine;
 public class Entity
 {
 	public string playerName;
+	public Player player;
 	public PawnScript[] myPawn;
 	public bool hasTurn;
 	public bool hasWon;
@@ -58,13 +59,12 @@ public class GameManager : MonoBehaviour
 
 		for (int i = 0; i < entities.Count; i++)
 		{
-			if (SaveSettings.players[i] == "HUMAN")
-			{
+			if (SaveSettings.players[i] == "HUMAN") {
 				entities[i].playerType = Entity.PlayerTypes.HUMAN;
-			}
-			if (SaveSettings.players[i] == "CPU")
-			{
+				entities[i].player = new Player(entities[i].playerName);
+			} else if (SaveSettings.players[i] == "CPU") {
 				entities[i].playerType = Entity.PlayerTypes.CPU;
+				entities[i].player = new Player(entities[i].playerName);
 			}
 		}
 	}

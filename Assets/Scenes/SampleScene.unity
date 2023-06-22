@@ -888,8 +888,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0, y: 0.9636305, z: -0.26723832, w: 0}
-  m_LocalPosition: {x: 0, y: 10, z: 20}
+  m_LocalRotation: {x: 0.26723832, y: 0, z: 0, w: 0.9636305}
+  m_LocalPosition: {x: 0, y: 10, z: -20}
   m_LocalScale: {x: 0.15000004, y: 0.15000002, z: 0.15000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2542,7 +2542,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1202611590}
-  m_LocalRotation: {x: 0.79982054, y: -0.18549073, z: -0.12896824, w: 0.55610037}
+  m_LocalRotation: {x: 0.79982054, y: -0.1854907, z: -0.12896827, w: 0.55610037}
   m_LocalPosition: {x: 0.61, y: 1.5, z: 1.15}
   m_LocalScale: {x: 0.49999994, y: 0.49999994, z: 0.50000006}
   m_ConstrainProportionsScale: 0
@@ -4659,6 +4659,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5172721647137120054, guid: 7b143350f92c85a4f80b68c8502d0e1e,
+        type: 3}
+      propertyPath: m_Name
+      value: CHEMISTRY
+      objectReference: {fileID: 0}
+    - target: {fileID: 5172721647684493855, guid: 7b143350f92c85a4f80b68c8502d0e1e,
+        type: 3}
+      propertyPath: m_Name
+      value: RISK3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5172721647696003047, guid: 7b143350f92c85a4f80b68c8502d0e1e,
+        type: 3}
+      propertyPath: m_Name
+      value: CIVIL ENGINEERING
+      objectReference: {fileID: 0}
+    - target: {fileID: 5172721648094328715, guid: 7b143350f92c85a4f80b68c8502d0e1e,
+        type: 3}
+      propertyPath: m_Name
+      value: ELECTRICAL ENGINEERING
+      objectReference: {fileID: 0}
     - target: {fileID: 5172721648119621457, guid: 7b143350f92c85a4f80b68c8502d0e1e,
         type: 3}
       propertyPath: m_Name
@@ -4718,6 +4738,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5172721648810813462, guid: 7b143350f92c85a4f80b68c8502d0e1e,
+        type: 3}
+      propertyPath: m_Name
+      value: MINING
+      objectReference: {fileID: 0}
+    - target: {fileID: 5172721649077622520, guid: 7b143350f92c85a4f80b68c8502d0e1e,
+        type: 3}
+      propertyPath: m_Name
+      value: ARCHITECTURE
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b143350f92c85a4f80b68c8502d0e1e, type: 3}

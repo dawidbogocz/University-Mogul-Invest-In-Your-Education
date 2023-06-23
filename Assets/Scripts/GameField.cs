@@ -42,7 +42,8 @@ public class GameField : MonoBehaviour
 
     public int id;
     public int cost;
-    public TextMeshPro fieldName;
+    public TextMeshPro fieldText;
+    private string fieldName;
     private int rent;
     private Player owner;
     private static FieldType type;
@@ -51,6 +52,7 @@ public class GameField : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
+        fieldName = name;
         owner = null;
         SetColor(id);
         SetType(id);
@@ -66,14 +68,20 @@ public class GameField : MonoBehaviour
         }
 
         if (type == FieldType.Dorm || type == FieldType.Faculty || type == FieldType.Recreation) {
-            fieldName.text = name + "\n$" + cost;
+            fieldText.text = name + "\n$" + cost;
         }
+
+        GameManager.fields.Add(this);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public string GetFieldName() {
+        return fieldName;
     }
 
     public Player GetOwner() {

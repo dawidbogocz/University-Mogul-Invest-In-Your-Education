@@ -44,13 +44,10 @@ public class Player
     {
         GameField property = null;
 
-        GameObject fields = GameObject.Find("Fields");
-
-        GameField[] gameFields = fields.GetComponentsInChildren<GameField>();
-
-        foreach (GameField gameField in gameFields) {
+        foreach (GameField gameField in GameManager.fields) {
             if (gameField.id == fieldId) {
                 property = gameField;
+                gameField.SetOwner(this);
             }
         }
 
@@ -58,15 +55,12 @@ public class Player
     }
 
     public void RemoveProperty(int fieldId) {
-       GameField property = null;
+        GameField property = null;
 
-       GameObject fields = GameObject.Find("Fields");
-
-       GameField[] gameFields = fields.GetComponentsInChildren<GameField>();
-
-       foreach (GameField gameField in gameFields) {
+        foreach (GameField gameField in GameManager.fields) {
             if (gameField.id == fieldId) {
                 property = gameField;
+                gameField.SetOwner(null);
             }
         }
 

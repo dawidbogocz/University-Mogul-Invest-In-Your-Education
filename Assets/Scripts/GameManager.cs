@@ -33,7 +33,8 @@ public class GameManager : MonoBehaviour
 	
     
     public List<Entity> entities = new List<Entity>();
-    
+    public static List<GameField> fields = new List<GameField>();
+
     public State state;
 
     public int activePlayer;

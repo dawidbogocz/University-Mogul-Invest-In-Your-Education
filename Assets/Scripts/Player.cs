@@ -6,7 +6,7 @@ public class Player
 {
     public string playerName;
     public int money;
-    public List<GamieField> properties;
+    public List<GameField> properties;
     public bool isInJail;
     public int jailTurns;
 
@@ -14,7 +14,7 @@ public class Player
     {
         playerName = name;
         money = 1500; // Initial money for each player
-        properties = new List<GamieField>();
+        properties = new List<GameField>();
         jailTurns=0;
         isInJail = false;
     }
@@ -42,13 +42,13 @@ public class Player
     // Property management
     public void AddProperty(int fieldId)
     {
-        GamieField property = null;
+        GameField property = null;
 
         GameObject fields = GameObject.Find("Fields");
 
-        GamieField[] gameFields = fields.GetComponentsInChildren<GamieField>();
+        GameField[] gameFields = fields.GetComponentsInChildren<GameField>();
 
-        foreach (GamieField gameField in gameFields) {
+        foreach (GameField gameField in gameFields) {
             if (gameField.id == fieldId) {
                 property = gameField;
             }
@@ -58,13 +58,13 @@ public class Player
     }
 
     public void RemoveProperty(int fieldId) {
-       GamieField property = null;
+       GameField property = null;
 
        GameObject fields = GameObject.Find("Fields");
 
-       GamieField[] gameFields = fields.GetComponentsInChildren<GamieField>();
+       GameField[] gameFields = fields.GetComponentsInChildren<GameField>();
 
-       foreach (GamieField gameField in gameFields) {
+       foreach (GameField gameField in gameFields) {
             if (gameField.id == fieldId) {
                 property = gameField;
             }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 // Enum for Field Types
 public enum FieldType {
@@ -36,11 +37,12 @@ public enum FieldColor {
     None
 }
 
-public class GamieField : MonoBehaviour
+public class GameField : MonoBehaviour
 {
 
     public int id;
     public int cost;
+    public TextMeshPro fieldName;
     private int rent;
     private Player owner;
     private static FieldType type;
@@ -61,6 +63,10 @@ public class GamieField : MonoBehaviour
             }
         } else {
             rent = cost / 2;
+        }
+
+        if (type == FieldType.Dorm || type == FieldType.Faculty || type == FieldType.Recreation) {
+            fieldName.text = name + "\n$" + cost;
         }
     }
 

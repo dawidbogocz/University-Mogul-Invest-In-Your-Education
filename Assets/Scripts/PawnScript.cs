@@ -53,11 +53,15 @@ public class PawnScript : MonoBehaviour
 
         if(diceNumber < 6)
         {
-			GameManager.Instance.state = State.SWITCH_PLAYER;
+			GameManager.Instance.state = State.BUYING;
+		}
+        else if(diceNumber == 6)
+        {
+			GameManager.Instance.state = State.ROLL_DICE;
 		}
         else
         {
-			GameManager.Instance.state = State.ROLL_DICE;
+			GameManager.Instance.state = State.SWITCH_PLAYER;
 		}
 
         isMoving = false;

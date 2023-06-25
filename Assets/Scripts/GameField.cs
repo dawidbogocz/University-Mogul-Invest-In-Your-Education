@@ -43,6 +43,7 @@ public class GameField : MonoBehaviour
     public int id;
     public int cost;
     public TextMeshPro fieldText;
+    private bool isForSale;
     private string fieldName;
     private int rent;
     private Player owner;
@@ -65,6 +66,12 @@ public class GameField : MonoBehaviour
             }
         } else {
             rent = cost / 2;
+        }
+
+        if(cost != 0) {
+            isForSale = true;
+        } else {
+            isForSale = false;
         }
 
         if (type == FieldType.Dorm || type == FieldType.Faculty || type == FieldType.Recreation) {
@@ -124,6 +131,7 @@ public class GameField : MonoBehaviour
             type = FieldType.Recreation;
         } else if (id == 2 || id == 7 || id == 17 || id == 22 || id == 33 || id == 36) {
             type = FieldType.SpecialCard;
+            isForSale = false;
 
             if (id == 2 || id == 17 || id == 33) {
                 subtype = FieldSubtype.Risk;

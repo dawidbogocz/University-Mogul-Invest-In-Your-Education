@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5506285}
   - component: {fileID: 5506286}
+  - component: {fileID: 5506287}
   m_Layer: 0
   m_Name: Yellow
   m_TagString: Untagged
@@ -169,7 +170,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPath: {fileID: 915057705}
-  currentField: 0
+  fieldId: 0
+--- !u!114 &5506287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5506284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: 
+  money: 0
+  properties: []
+  isInJail: 0
+  jailTurns: 0
 --- !u!114 &16324931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,7 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 5
   cost: 200
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!1 &28393320
 GameObject:
   m_ObjectHideFlags: 3
@@ -271,7 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 8
   cost: 100
-  fieldName: {fileID: 217478827}
+  fieldText: {fileID: 217478827}
 --- !u!1 &45023836
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,7 +375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 21
   cost: 240
-  fieldName: {fileID: 1880463772}
+  fieldText: {fileID: 1880463772}
 --- !u!114 &84012998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,7 +390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 16
   cost: 180
-  fieldName: {fileID: 917985826}
+  fieldText: {fileID: 917985826}
 --- !u!1 &119013959 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 826556019900568557, guid: 267eeaa14b741c24294e913768c8f478,
@@ -478,7 +496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 25
   cost: 200
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!114 &146145866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,7 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 18
   cost: 180
-  fieldName: {fileID: 1219266578}
+  fieldText: {fileID: 1219266578}
 --- !u!1 &176289803
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,7 +703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPath: {fileID: 915057705}
-  currentField: 0
+  fieldId: 0
 --- !u!1 &201675447
 GameObject:
   m_ObjectHideFlags: 3
@@ -944,7 +962,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 26
   cost: 260
-  fieldName: {fileID: 1686659324}
+  fieldText: {fileID: 1686659324}
 --- !u!114 &257723001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -959,7 +977,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 30
   cost: 0
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!1 &262728978
 GameObject:
   m_ObjectHideFlags: 3
@@ -1018,7 +1036,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 36
   cost: 0
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!1001 &304709113
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1172,7 +1190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 22
   cost: 0
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,7 +1654,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 15
   cost: 200
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!114 &482005704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1651,7 +1669,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 23
   cost: 220
-  fieldName: {fileID: 1968268957}
+  fieldText: {fileID: 1968268957}
 --- !u!1 &487923634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1662,6 +1680,7 @@ GameObject:
   m_Component:
   - component: {fileID: 487923635}
   - component: {fileID: 487923636}
+  - component: {fileID: 487923637}
   m_Layer: 0
   m_Name: Blue
   m_TagString: Untagged
@@ -1698,7 +1717,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPath: {fileID: 915057705}
-  currentField: 0
+  fieldId: 0
+--- !u!114 &487923637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487923634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: 
+  money: 0
+  properties: []
+  isInJail: 0
+  jailTurns: 0
 --- !u!1 &529047439 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 826556020312690213, guid: 267eeaa14b741c24294e913768c8f478,
@@ -1732,7 +1768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 14
   cost: 160
-  fieldName: {fileID: 1781713959}
+  fieldText: {fileID: 1781713959}
 --- !u!1 &562550916
 GameObject:
   m_ObjectHideFlags: 0
@@ -1969,24 +2005,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entities:
   - playerName: Red
+    player: {fileID: 0}
     myPawn:
     - {fileID: 1239148765}
     hasTurn: 1
     hasWon: 0
     playerType: 1
   - playerName: Green
+    player: {fileID: 0}
     myPawn:
     - {fileID: 635280498}
     hasTurn: 0
     hasWon: 0
     playerType: 1
   - playerName: Blue
+    player: {fileID: 0}
     myPawn:
     - {fileID: 487923636}
     hasTurn: 0
     hasWon: 0
     playerType: 1
   - playerName: Yellow
+    player: {fileID: 0}
     myPawn:
     - {fileID: 5506286}
     hasTurn: 0
@@ -2035,7 +2075,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPath: {fileID: 915057705}
-  currentField: 0
+  fieldId: 0
 --- !u!64 &631525011
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2070,7 +2110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 10
   cost: 0
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!1 &635280496
 GameObject:
   m_ObjectHideFlags: 0
@@ -2081,6 +2121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 635280497}
   - component: {fileID: 635280498}
+  - component: {fileID: 635280499}
   m_Layer: 0
   m_Name: Green
   m_TagString: Untagged
@@ -2117,7 +2158,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPath: {fileID: 915057705}
-  currentField: 0
+  fieldId: 0
+--- !u!114 &635280499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635280496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: 
+  money: 0
+  properties: []
+  isInJail: 0
+  jailTurns: 0
 --- !u!114 &640553405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2132,7 +2190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 38
   cost: 0
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!114 &661048328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2147,7 +2205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 35
   cost: 200
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!1 &669843940
 GameObject:
   m_ObjectHideFlags: 0
@@ -2334,7 +2392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 37
   cost: 350
-  fieldName: {fileID: 1606299905}
+  fieldText: {fileID: 1606299905}
 --- !u!1001 &788572641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2427,7 +2485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 19
   cost: 200
-  fieldName: {fileID: 1463662804}
+  fieldText: {fileID: 1463662804}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2562,7 +2620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 6
   cost: 100
-  fieldName: {fileID: 1146706550}
+  fieldText: {fileID: 1146706550}
 --- !u!1 &850987137 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1542716469585780, guid: 59daf04865ccee541a5fb01a9b0f50db,
@@ -2582,7 +2640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPath: {fileID: 915057705}
-  currentField: 0
+  fieldId: 0
 --- !u!64 &850987142
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3118,7 +3176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 28
   cost: 150
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!1001 &1014010492
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3228,7 +3286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 40
   cost: 0
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!1 &1084126461 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 826556021066704215, guid: 267eeaa14b741c24294e913768c8f478,
@@ -3849,7 +3907,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 29
   cost: 260
-  fieldName: {fileID: 2014868246}
+  fieldText: {fileID: 2014868246}
 --- !u!1 &1219266576
 GameObject:
   m_ObjectHideFlags: 0
@@ -4032,6 +4090,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1239148764}
   - component: {fileID: 1239148765}
+  - component: {fileID: 1239148766}
   m_Layer: 0
   m_Name: Red
   m_TagString: Untagged
@@ -4068,7 +4127,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPath: {fileID: 915057705}
-  currentField: 0
+  fieldId: 0
+--- !u!114 &1239148766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239148763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: 
+  money: 0
+  properties: []
+  isInJail: 0
+  jailTurns: 0
 --- !u!1001 &1252010709
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4338,7 +4414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPath: {fileID: 915057705}
-  currentField: 0
+  fieldId: 0
 --- !u!64 &1316719724
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4752,7 +4828,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 11
   cost: 140
-  fieldName: {fileID: 2092166289}
+  fieldText: {fileID: 2092166289}
 --- !u!1 &1431680098 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1648459518365905705, guid: 82ab2200a78fc0747a30610920d74f06,
@@ -4772,7 +4848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPath: {fileID: 915057705}
-  currentField: 0
+  fieldId: 0
 --- !u!1 &1431770049
 GameObject:
   m_ObjectHideFlags: 0
@@ -5394,7 +5470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 24
   cost: 220
-  fieldName: {fileID: 1315585171}
+  fieldText: {fileID: 1315585171}
 --- !u!1 &1534596357
 GameObject:
   m_ObjectHideFlags: 3
@@ -5479,7 +5555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 33
   cost: 0
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!114 &1580642220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5494,7 +5570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 7
   cost: 0
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!114 &1603082083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5509,7 +5585,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 39
   cost: 400
-  fieldName: {fileID: 1089372305}
+  fieldText: {fileID: 1089372305}
 --- !u!1 &1603845253
 GameObject:
   m_ObjectHideFlags: 3
@@ -5745,7 +5821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPath: {fileID: 915057705}
-  currentField: 0
+  fieldId: 0
 --- !u!114 &1656193549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5760,7 +5836,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 31
   cost: 320
-  fieldName: {fileID: 1452251380}
+  fieldText: {fileID: 1452251380}
 --- !u!1 &1657898719
 GameObject:
   m_ObjectHideFlags: 0
@@ -6119,7 +6195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 27
   cost: 280
-  fieldName: {fileID: 176289805}
+  fieldText: {fileID: 176289805}
 --- !u!114 &1718025585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6134,7 +6210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 17
   cost: 0
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!114 &1718257459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6149,7 +6225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 9
   cost: 120
-  fieldName: {fileID: 1884933989}
+  fieldText: {fileID: 1884933989}
 --- !u!1 &1762655479
 GameObject:
   m_ObjectHideFlags: 0
@@ -6504,7 +6580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPath: {fileID: 915057705}
-  currentField: 0
+  fieldId: 0
 --- !u!1 &1836909259
 GameObject:
   m_ObjectHideFlags: 0
@@ -6529,7 +6605,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1836909259}
-  m_LocalRotation: {x: 0.68747413, y: 0.42434618, z: 0.30954602, w: 0.5014887}
+  m_LocalRotation: {x: 0.6874742, y: 0.42434612, z: 0.30954596, w: 0.5014888}
   m_LocalPosition: {x: -1.53, y: 0.69, z: 1.04}
   m_LocalScale: {x: 0.50000006, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
@@ -6839,7 +6915,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 13
   cost: 140
-  fieldName: {fileID: 1349718683}
+  fieldText: {fileID: 1349718683}
 --- !u!1 &1884933987
 GameObject:
   m_ObjectHideFlags: 0
@@ -7026,7 +7102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 34
   cost: 300
-  fieldName: {fileID: 1968240501}
+  fieldText: {fileID: 1968240501}
 --- !u!114 &1931482861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7041,7 +7117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 32
   cost: 300
-  fieldName: {fileID: 1657898721}
+  fieldText: {fileID: 1657898721}
 --- !u!1 &1950115171
 GameObject:
   m_ObjectHideFlags: 0
@@ -7753,7 +7829,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 12
   cost: 150
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!1 &2052465719
 GameObject:
   m_ObjectHideFlags: 0
@@ -8029,7 +8105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 20
   cost: 0
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!1 &2092166287
 GameObject:
   m_ObjectHideFlags: 0
@@ -9009,7 +9085,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 4
   cost: 0
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!114 &5172721647748476131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9024,7 +9100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   cost: 60
-  fieldName: {fileID: 669843942}
+  fieldText: {fileID: 669843942}
 --- !u!114 &5172721647748476132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9039,7 +9115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   cost: 0
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}
 --- !u!114 &5172721647748476133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9054,7 +9130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   cost: 60
-  fieldName: {fileID: 1084909316}
+  fieldText: {fileID: 1084909316}
 --- !u!114 &5172721647748476134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9069,4 +9145,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   cost: 0
-  fieldName: {fileID: 0}
+  fieldText: {fileID: 0}

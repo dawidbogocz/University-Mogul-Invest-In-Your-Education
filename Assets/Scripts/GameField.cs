@@ -5,6 +5,7 @@ using TMPro;
 
 // Enum for Field Types
 public enum FieldType {
+    None,
     Start,
     Field,
     Dorm,
@@ -43,13 +44,13 @@ public class GameField : MonoBehaviour
     public int id;
     public int cost;
     public TextMeshPro fieldText;
-    private bool isForSale;
+    public bool isForSale;
     private string fieldName;
     private int rent;
     private Player owner;
-    private static FieldType type;
-    private static FieldSubtype subtype;
-    private static FieldColor color;
+    private FieldType type;
+    private FieldSubtype subtype;
+    private FieldColor color;
 
     // Start is called before the first frame update
     void Start() {
@@ -87,6 +88,12 @@ public class GameField : MonoBehaviour
         
     }
 
+    public int GetRent() {
+        return rent;
+    }
+    public FieldType GetFieldType() {
+        return type;
+    }
     public string GetFieldName() {
         return fieldName;
     }
@@ -153,7 +160,8 @@ public class GameField : MonoBehaviour
             type = FieldType.Prison;
         } else if (id == 0) {
             type = FieldType.Start;
-        }
+        } else { 
+            type = FieldType.None; }
     }
 
 }

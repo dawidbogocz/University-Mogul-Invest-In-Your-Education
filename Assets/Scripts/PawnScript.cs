@@ -21,8 +21,7 @@ public class PawnScript : MonoBehaviour
         }
         isMoving = true;
 
-        while (steps > 0)
-        {
+        while (steps > 0) {
             fieldId++;
             fieldId %= currentPath.childNodeList.Count;
             Vector3 nextFieldPosition = currentPath.childNodeList[fieldId].position;
@@ -62,11 +61,11 @@ public class PawnScript : MonoBehaviour
 		}
 
         isMoving = false;
-        player = GetComponent<Player>();
         player.SetCurrentField(fieldId);
+        player.Action();
     }
 
-	IEnumerator MoveToNextNode(Vector3 goal)
+    IEnumerator MoveToNextNode(Vector3 goal)
 	{
 		Vector3 startPosition = transform.position;
 		float duration = 0.5f;
@@ -95,9 +94,9 @@ public class PawnScript : MonoBehaviour
 		yield return new WaitForSeconds(duration * 0.25f);
 	}
 
-	public void StartTheMove(int diceNumber)
-	{
+	public void StartTheMove(int diceNumber) {
         steps = diceNumber;
+        player = GetComponent<Player>();
         StartCoroutine(Move(steps));
     }
 }

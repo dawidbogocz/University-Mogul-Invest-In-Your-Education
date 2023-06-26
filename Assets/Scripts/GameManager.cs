@@ -784,6 +784,12 @@ public class GameManager : MonoBehaviour
 	{
 		obj.SetActive(on);
 	}
+	
+	void ActivateBuyingStateButtons(bool on)
+	{
+		skipButton.SetActive(on);
+		buyButton.SetActive(on);
+	}
 
 	public void HumanRollDice()
 	{

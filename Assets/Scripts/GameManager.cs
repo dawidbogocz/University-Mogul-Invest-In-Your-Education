@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor;
 using UnityEngine;
+using TMPro;
 
 [System.Serializable]
 public class Entity
@@ -24,12 +25,14 @@ public enum State
 {
 	ROLL_DICE,
 	WAITING,
-	SWITCH_PLAYER
+	SWITCH_PLAYER,
+	BUYING
 }
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+	public TMP_Text amountOfMoney;
 	
     
     public List<Entity> entities = new List<Entity>();
@@ -41,6 +44,8 @@ public class GameManager : MonoBehaviour
     bool switchingPlayer = false;
     bool turnPossible = true;
 
+	public GameObject skipButton;
+	public GameObject buyButton;
     public GameObject rollButton;
 	int rolledHumanDice;
     int diceNumber;
@@ -48,6 +53,9 @@ public class GameManager : MonoBehaviour
 	public DiceScript diceScript;
 
 	public CameraScript cameraScript;
+
+	bool skipped;
+
 
 	public GameObject Red;
 	public GameObject Green;
@@ -73,7 +81,8 @@ public class GameManager : MonoBehaviour
 	void Start()
     {
 		ActivateButton(false);
-
+		ActivateBuyingStateButtons(false);
+		skipped = false;
 		int randomPlayer = Random.Range(0, entities.Count);
 		activePlayer = randomPlayer;
 		Info.Instance.ShowMessage(entities[activePlayer].playerName + " starts first!");
@@ -170,8 +179,15 @@ public class GameManager : MonoBehaviour
 						}
 					}
 					break;
+				case State.BUYING:
+					{
+						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
+						state = State.WAITING;
+					}
+					break;
 				case State.WAITING:
 					{
+						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
 
 					}
 					break;
@@ -181,6 +197,7 @@ public class GameManager : MonoBehaviour
 						{
 							StartCoroutine(SwitchPlayer());
 							state = State.WAITING;
+							
 						}
 					}
 					break;
@@ -210,7 +227,6 @@ public class GameManager : MonoBehaviour
 				case State.ROLL_DICE:
 					{
 						
-
 						if (turnPossible)
 						{
 							ActivateButton(true);
@@ -218,17 +234,30 @@ public class GameManager : MonoBehaviour
 						}
 					}
 					break;
+				case State.BUYING:
+					{
+						ActivateBuyingStateButtons(true);
+						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
+						if(skipped){
+							state = State.WAITING;
+							skipped = false;
+						}
+
+					}
+					break;
 				case State.WAITING:
 					{
-
+						ActivateBuyingStateButtons(true);
+						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
 					}
 					break;
 				case State.SWITCH_PLAYER:
 					{
 						if (turnPossible)
 						{
+							ActivateBuyingStateButtons(false);
 							ActivateButton(false);
-							StartCoroutine(SwitchPlayer());
+							StartCoroutine(SwitchPlayer());						
 							state = State.WAITING;
 						}
 					}
@@ -251,22 +280,25 @@ public class GameManager : MonoBehaviour
 	public void MovePlayer(int diceNumber)
 	{
 		Info.Instance.ShowMessage(entities[activePlayer].playerName + " has rolled " + diceNumber);
-
 		List<PawnScript> player = new List<PawnScript>();
 
 		for(int i = 0; i < entities[activePlayer].myPawn.Length; i++)
 		{
-		
+	
 			player.Add(entities[activePlayer].myPawn[i]);
 		}
+
 		if(player.Count > 0)
 		{
 			player[0].StartTheMove(diceNumber);
 			state = State.WAITING;
 			return;
 		}
-		state = State.SWITCH_PLAYER;
+
+		
+		state = State.BUYING;
 	}
+
 
 	IEnumerator SwitchPlayer()
 	{
@@ -317,11 +349,26 @@ public class GameManager : MonoBehaviour
 	{
 		rollButton.SetActive(on);
 	}
+	
+	void ActivateBuyingStateButtons(bool on)
+	{
+		skipButton.SetActive(on);
+		buyButton.SetActive(on);
+	}
 
 	public void HumanRollDice()
 	{
 		ActivateButton(false);
 
 		RollDice();
+	}
+	public void SkipTurn()
+	{
+		ActivateBuyingStateButtons(false);
+		skipped = true;
+	}
+	public void BuyProperty()
+	{
+		ActivateBuyingStateButtons(false);
 	}
 }

@@ -94,6 +94,7 @@ public class PawnScript : MonoBehaviour
 		yield return new WaitForSeconds(duration * 0.25f);
 	}
 
+    
 	public void StartTheMove(int diceNumber) {
         steps = diceNumber;
         player = GetComponent<Player>();

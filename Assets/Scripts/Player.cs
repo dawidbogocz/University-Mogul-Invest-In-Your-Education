@@ -138,4 +138,9 @@ public class Player : MonoBehaviour {
     public GameField GetCurrentField() {
         return currentField;
     }
+
+    public int GetIdOfCurrentField(){
+
+        return currentField.id;
+    }
 }

@@ -3,7 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public enum PlayerTypes {
+    HUMAN,
+    CPU,
+    OTHER
+}
+
 public class Player : MonoBehaviour {
+    public PawnScript[] myPawn;
+    public bool hasTurn;
+    public bool hasWon;
+    public PlayerTypes playerType;
     public string playerName;
     public int money;
     public List<GameField> properties;
@@ -11,14 +21,6 @@ public class Player : MonoBehaviour {
     private GameManager gameManager;
     public bool isInJail;
     public int jailTurns;
-
-    public Player(string name) {
-        playerName = name;
-        money = 1500; // Initial money for each player
-        properties = new List<GameField>();
-        jailTurns = 0;
-        isInJail = false;
-    }
 
     void Start() {
         playerName = name;
@@ -36,7 +38,6 @@ public class Player : MonoBehaviour {
     {
 		if (currentField.isForSale && currentField.GetOwner() == null)
 		{
-			//TEST BUY
 			if (this.DeductMoney(currentField.cost))
 			{
 				currentField.SetOwner(this);
@@ -78,7 +79,7 @@ public class Player : MonoBehaviour {
 		if (currentField.GetFieldType() == FieldType.Start)
 		{
 			this.AddMoney(400);
-			Debug.Log(playerName + " START +400 (" + currentField.id + ")");
+			Debug.Log(playerName + " START +400");
 		}
 	}
     // Money management

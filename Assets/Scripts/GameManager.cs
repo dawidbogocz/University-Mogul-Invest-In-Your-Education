@@ -7,22 +7,6 @@ using TMPro;
 using UnityEditor.Experimental.GraphView;
 using System.Linq;
 
-[System.Serializable]
-public class Entity
-{
-	public string playerName;
-	public Player player;
-	public PawnScript[] myPawn;
-	public bool hasTurn;
-	public bool hasWon;
-	public enum PlayerTypes
-	{
-		HUMAN,
-		CPU,
-		OTHER
-	}
-	public PlayerTypes playerType;
-}
 public enum State
 {
 	ROLL_DICE,
@@ -37,7 +21,7 @@ public class GameManager : MonoBehaviour
 	public TMP_Text amountOfMoney;
 	
     
-    public List<Entity> entities = new List<Entity>();
+    public List<Player> players = new List<Player>();
     public static List<GameField> fields = new List<GameField>();
 
     public State state;
@@ -75,14 +59,16 @@ public class GameManager : MonoBehaviour
 	{
 		Instance = this;
 
-		for (int i = 0; i < entities.Count; i++)
-		{
+		players[0] = GameObject.Find("Red").GetComponent<Player>();
+		players[1] = GameObject.Find("Green").GetComponent<Player>();
+		players[2] = GameObject.Find("Blue").GetComponent<Player>();
+		players[3] = GameObject.Find("Yellow").GetComponent<Player>();
+
+		for (int i = 0; i < players.Count; i++) {
 			if (SaveSettings.players[i] == "HUMAN") {
-				entities[i].playerType = Entity.PlayerTypes.HUMAN;
-				entities[i].player = new Player(entities[i].playerName);
+				players[i].playerType = PlayerTypes.HUMAN;
 			} else if (SaveSettings.players[i] == "CPU") {
-				entities[i].playerType = Entity.PlayerTypes.CPU;
-				entities[i].player = new Player(entities[i].playerName);
+				players[i].playerType = PlayerTypes.CPU;
 			}
 		}
 	}
@@ -101,16 +87,16 @@ public class GameManager : MonoBehaviour
 		ChanceTasks = new List<string>(lines2);
 
 		skipped = false;
-		int randomPlayer = Random.Range(0, entities.Count);
+		int randomPlayer = Random.Range(0, players.Count);
 		activePlayer = randomPlayer;
-		Info.Instance.ShowMessage(entities[activePlayer].playerName + " starts first!");
+		Info.Instance.ShowMessage(players[activePlayer].playerName + " starts first!");
     }
 
     void Update()
     {
-		if (entities[activePlayer].playerType == Entity.PlayerTypes.CPU)
+		if (players[activePlayer].playerType == PlayerTypes.CPU)
 		{
-			switch (entities[activePlayer].playerName)
+			switch (players[activePlayer].playerName)
 			{
 				case "Red":
 					if (Red.transform.rotation == Quaternion.Euler(0f, 0f, 0f))
@@ -199,15 +185,15 @@ public class GameManager : MonoBehaviour
 					break;
 				case State.BUYING:
 					{
-						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
+						amountOfMoney.text = players[activePlayer].money.ToString() + " $";
 						isBuying = true;
 						if (turnPossible)
 						{
-							int tmp = entities[activePlayer].myPawn[0].fieldId;
+							int tmp = players[activePlayer].myPawn[0].fieldId;
 							Debug.Log(tmp);
-							FieldType fieldType = entities[activePlayer].player.GetCurrentField().GetFieldType();
+							FieldType fieldType = players[activePlayer].GetCurrentField().GetFieldType();
 							Debug.Log(fieldType);
-							FieldSubtype fieldSubtype = entities[activePlayer].player.GetCurrentField().GetFieldSubtype();
+							FieldSubtype fieldSubtype = players[activePlayer].GetCurrentField().GetFieldSubtype();
 							Debug.Log(fieldSubtype);
 							if (fieldSubtype == FieldSubtype.Risk)
 							{
@@ -241,17 +227,17 @@ public class GameManager : MonoBehaviour
 								{
 									if (RiskTasks[randomIndex].Contains("$200"))
 									{
-										entities[activePlayer].player.AddMoney(200);
+										players[activePlayer].AddMoney(200);
 										state = State.SWITCH_PLAYER;
 									}
 									else if (RiskTasks[randomIndex].Contains("$500"))
 									{
-										entities[activePlayer].player.AddMoney(500);
+										players[activePlayer].AddMoney(500);
 										state = State.SWITCH_PLAYER;
 									}
 									else if (RiskTasks[randomIndex].Contains("$1000"))
 									{
-										entities[activePlayer].player.AddMoney(1000);
+										players[activePlayer].AddMoney(1000);
 										state = State.SWITCH_PLAYER;
 									}
 								}
@@ -259,17 +245,17 @@ public class GameManager : MonoBehaviour
 								{
 									if (RiskTasks[randomIndex].Contains("$25"))
 									{
-										entities[activePlayer].player.DeductMoney(25);
+										players[activePlayer].DeductMoney(25);
 										state = State.SWITCH_PLAYER;
 									}
 									else if (RiskTasks[randomIndex].Contains("$50"))
 									{
-										entities[activePlayer].player.DeductMoney(50);
+										players[activePlayer].DeductMoney(50);
 										state = State.SWITCH_PLAYER;
 									}
 									else if (RiskTasks[randomIndex].Contains("$100"))
 									{
-										entities[activePlayer].player.DeductMoney(100);
+										players[activePlayer].DeductMoney(100);
 										state = State.SWITCH_PLAYER;
 									}
 								}
@@ -384,29 +370,29 @@ public class GameManager : MonoBehaviour
 								{
 									if (ChanceTasks[randomIndex].Contains("$100"))
 									{
-										entities[activePlayer].player.AddMoney(100);
+										players[activePlayer].AddMoney(100);
 										state = State.SWITCH_PLAYER;
 									}
 									else if (ChanceTasks[randomIndex].Contains("$25"))
 									{
-										entities[activePlayer].player.AddMoney(25);
+										players[activePlayer].AddMoney(25);
 										state = State.SWITCH_PLAYER;
 									}
 									else if (ChanceTasks[randomIndex].Contains("$50"))
 									{
-										entities[activePlayer].player.AddMoney(50);
+										players[activePlayer].AddMoney(50);
 										state = State.SWITCH_PLAYER;
 									}
 								}
 							}
 							else if (fieldType == FieldType.Faculty || fieldType == FieldType.Dorm || fieldType == FieldType.Elevator || fieldType == FieldType.Recreation)
 							{
-								entities[activePlayer].player.BuyPay();
+								players[activePlayer].BuyPay();
 								state = State.SWITCH_PLAYER;
 							}
 							else if (fieldType == FieldType.Tax)
 							{
-								entities[activePlayer].player.Tax();
+								players[activePlayer].Tax();
 								state = State.SWITCH_PLAYER;
 							}
 							else
@@ -423,7 +409,7 @@ public class GameManager : MonoBehaviour
 					break;
 				case State.WAITING:
 					{
-						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
+						amountOfMoney.text = "$" + players[activePlayer].money.ToString();
 
 					}
 					break;
@@ -439,21 +425,21 @@ public class GameManager : MonoBehaviour
 					break;
 			}
 		}
-		if (entities[activePlayer].playerType == Entity.PlayerTypes.HUMAN)
+		if (players[activePlayer].playerType == PlayerTypes.HUMAN)
 		{
-			if (entities[activePlayer].playerName == "Red")
+			if (players[activePlayer].playerName == "Red")
 			{
 				cameraScript.SwitchCamera(cameraScript.redCam);
 			}
-			else if (entities[activePlayer].playerName == "Green")
+			else if (players[activePlayer].playerName == "Green")
 			{
 				cameraScript.SwitchCamera(cameraScript.greenCam);
 			}
-			else if (entities[activePlayer].playerName == "Blue")
+			else if (players[activePlayer].playerName == "Blue")
 			{
 				cameraScript.SwitchCamera(cameraScript.blueCam);
 			}
-			else if (entities[activePlayer].playerName == "Yellow")
+			else if (players[activePlayer].playerName == "Yellow")
 			{
 				cameraScript.SwitchCamera(cameraScript.yellowCam);
 			}
@@ -472,16 +458,16 @@ public class GameManager : MonoBehaviour
 					break;
 				case State.BUYING:
 					{
-						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
+						amountOfMoney.text = "$" + players[activePlayer].money.ToString();
 						isBuying = true;
 						if (turnPossible)
 						{
 							ActivateObject(ref skipButton, true);
-							int tmp = entities[activePlayer].myPawn[0].fieldId;
+							int tmp = players[activePlayer].myPawn[0].fieldId;
 							Debug.Log(tmp);
-							FieldType fieldType = entities[activePlayer].player.GetCurrentField().GetFieldType();
+							FieldType fieldType = players[activePlayer].GetCurrentField().GetFieldType();
 							Debug.Log(fieldType);
-							FieldSubtype fieldSubtype = entities[activePlayer].player.GetCurrentField().GetFieldSubtype();
+							FieldSubtype fieldSubtype = players[activePlayer].GetCurrentField().GetFieldSubtype();
 							Debug.Log(fieldSubtype);
 							if (fieldSubtype == FieldSubtype.Risk)
 							{
@@ -514,17 +500,17 @@ public class GameManager : MonoBehaviour
 								{
 									if (RiskTasks[randomIndex].Contains("$200"))
 									{
-										entities[activePlayer].player.AddMoney(200);
+										players[activePlayer].AddMoney(200);
 										state = State.WAITING;
 									}
 									else if (RiskTasks[randomIndex].Contains("$500"))
 									{
-										entities[activePlayer].player.AddMoney(500);
+										players[activePlayer].AddMoney(500);
 										state = State.WAITING;
 									}
 									else if (RiskTasks[randomIndex].Contains("$1000"))
 									{
-										entities[activePlayer].player.AddMoney(1000);
+										players[activePlayer].AddMoney(1000);
 										state = State.WAITING;
 									}
 								}
@@ -532,17 +518,17 @@ public class GameManager : MonoBehaviour
 								{
 									if (RiskTasks[randomIndex].Contains("$25"))
 									{
-										entities[activePlayer].player.DeductMoney(25);
+										players[activePlayer].DeductMoney(25);
 										state = State.WAITING;
 									}
 									else if (RiskTasks[randomIndex].Contains("$50"))
 									{
-										entities[activePlayer].player.DeductMoney(50);
+										players[activePlayer].DeductMoney(50);
 										state = State.WAITING;
 									}
 									else if (RiskTasks[randomIndex].Contains("$100"))
 									{
-										entities[activePlayer].player.DeductMoney(100);
+										players[activePlayer].DeductMoney(100);
 										state = State.WAITING;
 									}
 								}
@@ -658,17 +644,17 @@ public class GameManager : MonoBehaviour
 								{
 									if (ChanceTasks[randomIndex].Contains("$100"))
 									{
-										entities[activePlayer].player.AddMoney(100);
+										players[activePlayer].AddMoney(100);
 										state = State.WAITING;
 									}
 									else if (ChanceTasks[randomIndex].Contains("$25"))
 									{
-										entities[activePlayer].player.AddMoney(25);
+										players[activePlayer].AddMoney(25);
 										state = State.WAITING;
 									}
 									else if (ChanceTasks[randomIndex].Contains("$50"))
 									{
-										entities[activePlayer].player.AddMoney(50);
+										players[activePlayer].AddMoney(50);
 										state = State.WAITING;
 									}
 								}
@@ -680,7 +666,7 @@ public class GameManager : MonoBehaviour
 							}
 							else if (fieldType == FieldType.Tax)
 							{
-								entities[activePlayer].player.Tax();
+								players[activePlayer].Tax();
 								state = State.WAITING;
 							}
 							else
@@ -696,7 +682,7 @@ public class GameManager : MonoBehaviour
 					break;
 				case State.WAITING:
 					{
-						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
+						amountOfMoney.text = players[activePlayer].money.ToString() + " $";
 					}
 					break;
 				case State.SWITCH_PLAYER:
@@ -729,18 +715,18 @@ public class GameManager : MonoBehaviour
 
 	public void MovePlayer(int diceNumber)
 	{
-		Info.Instance.ShowMessage(entities[activePlayer].playerName + " has rolled " + diceNumber);
-		List<PawnScript> player = new List<PawnScript>();
+		Info.Instance.ShowMessage(players[activePlayer].playerName + " has rolled " + diceNumber);
+		List<PawnScript> pawn = new List<PawnScript>();
 
-		for(int i = 0; i < entities[activePlayer].myPawn.Length; i++)
+		for(int i = 0; i < players[activePlayer].myPawn.Length; i++)
 		{
 	
-			player.Add(entities[activePlayer].myPawn[i]);
+			pawn.Add(players[activePlayer].myPawn[i]);
 		}
 
-		if(player.Count > 0)
+		if(pawn.Count > 0)
 		{
-			player[0].StartTheMove(diceNumber);
+			pawn[0].StartTheMove(diceNumber);
 			state = State.WAITING;
 			return;
 		}
@@ -768,18 +754,18 @@ public class GameManager : MonoBehaviour
 	void SetNextActivePlayer()
 	{
 		activePlayer++;
-		activePlayer %= entities.Count;
+		activePlayer %= players.Count;
 
 		int available = 0;
-		for(int i = 0; i < entities.Count; i++)
+		for(int i = 0; i < players.Count; i++)
 		{
-			if (!entities[i].hasWon)
+			if (!players[i].hasWon)
 			{
 				available++;
 			}
 		}
 
-		if (entities[activePlayer].hasWon && available > 1)
+		if (players[activePlayer].hasWon && available > 1)
 		{
 			SetNextActivePlayer();
 			return;
@@ -789,7 +775,7 @@ public class GameManager : MonoBehaviour
 			state = State.WAITING;
 			return;
 		}
-		Info.Instance.ShowMessage(entities[activePlayer].playerName + "'s turn!");
+		Info.Instance.ShowMessage(players[activePlayer].playerName + "'s turn!");
 		state = State.ROLL_DICE;
 	}
 
@@ -815,6 +801,6 @@ public class GameManager : MonoBehaviour
 	{
 		ActivateObject(ref buyButton, false);
 
-		entities[activePlayer].player.BuyPay();
+		players[activePlayer].BuyPay();
 	}
 }

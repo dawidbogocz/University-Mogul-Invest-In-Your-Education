@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor;
 using UnityEngine;
+using TMPro;
+using UnityEditor.Experimental.GraphView;
+using System.Linq;
 
 [System.Serializable]
 public class Entity
@@ -31,6 +34,7 @@ public enum State
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+	public TMP_Text amountOfMoney;
 	
     
     public List<Entity> entities = new List<Entity>();
@@ -43,8 +47,9 @@ public class GameManager : MonoBehaviour
     bool turnPossible = true;
 	bool isBuying = false;
 
+	public GameObject skipButton;
+	public GameObject buyButton;
     public GameObject rollButton;
-	public GameObject endTurn;
 	public GameObject cardInfo;
 	int rolledHumanDice;
     int diceNumber;
@@ -52,6 +57,9 @@ public class GameManager : MonoBehaviour
 	public DiceScript diceScript;
 
 	public CameraScript cameraScript;
+
+	bool skipped;
+
 
 	public GameObject Red;
 	public GameObject Green;
@@ -82,8 +90,9 @@ public class GameManager : MonoBehaviour
 	void Start()
     {
 		ActivateObject(ref rollButton, false);
-		ActivateObject(ref endTurn, false);
 		ActivateObject(ref cardInfo, false);
+		ActivateObject(ref skipButton, false);
+		ActivateObject(ref buyButton, false);
 
 		var lines1 = fileRisk.text.Split('\n');
 		RiskTasks = new List<string>(lines1);
@@ -91,6 +100,7 @@ public class GameManager : MonoBehaviour
 		var lines2 = fileChance.text.Split('\n');
 		ChanceTasks = new List<string>(lines2);
 
+		skipped = false;
 		int randomPlayer = Random.Range(0, entities.Count);
 		activePlayer = randomPlayer;
 		Info.Instance.ShowMessage(entities[activePlayer].playerName + " starts first!");
@@ -187,8 +197,233 @@ public class GameManager : MonoBehaviour
 						}
 					}
 					break;
+				case State.BUYING:
+					{
+						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
+						isBuying = true;
+						if (turnPossible)
+						{
+							int tmp = entities[activePlayer].myPawn[0].fieldId;
+							Debug.Log(tmp);
+							FieldType fieldType = entities[activePlayer].player.GetCurrentField().GetFieldType();
+							Debug.Log(fieldType);
+							FieldSubtype fieldSubtype = entities[activePlayer].player.GetCurrentField().GetFieldSubtype();
+							Debug.Log(fieldSubtype);
+							if (fieldSubtype == FieldSubtype.Risk)
+							{
+								var randomIndex = Random.Range(0, RiskTasks.Count);
+								Debug.Log(RiskTasks[randomIndex]);
+								Info.Instance.ShowCard(RiskTasks[randomIndex]);
+
+								if (RiskTasks[randomIndex].Contains("GO"))
+								{
+									new WaitForSeconds(5);
+									if (RiskTasks[randomIndex].Contains("Tax"))
+									{
+										MovePlayer(38 - tmp);
+									}
+									else if (RiskTasks[randomIndex].Contains("BREAK"))
+									{
+										if (tmp > 30)
+										{
+											int temp = 39 - tmp + 1 + 30;
+											MovePlayer(temp);
+											state = State.SWITCH_PLAYER;
+										}
+										else
+										{
+											MovePlayer(30 - tmp);
+											state = State.SWITCH_PLAYER;
+										}
+									}
+								}
+								else if (RiskTasks[randomIndex].Contains("COLLECT"))
+								{
+									if (RiskTasks[randomIndex].Contains("$200"))
+									{
+										entities[activePlayer].player.AddMoney(200);
+										state = State.SWITCH_PLAYER;
+									}
+									else if (RiskTasks[randomIndex].Contains("$500"))
+									{
+										entities[activePlayer].player.AddMoney(500);
+										state = State.SWITCH_PLAYER;
+									}
+									else if (RiskTasks[randomIndex].Contains("$1000"))
+									{
+										entities[activePlayer].player.AddMoney(1000);
+										state = State.SWITCH_PLAYER;
+									}
+								}
+								else if (RiskTasks[randomIndex].Contains("PAY"))
+								{
+									if (RiskTasks[randomIndex].Contains("$25"))
+									{
+										entities[activePlayer].player.DeductMoney(25);
+										state = State.SWITCH_PLAYER;
+									}
+									else if (RiskTasks[randomIndex].Contains("$50"))
+									{
+										entities[activePlayer].player.DeductMoney(50);
+										state = State.SWITCH_PLAYER;
+									}
+									else if (RiskTasks[randomIndex].Contains("$100"))
+									{
+										entities[activePlayer].player.DeductMoney(100);
+										state = State.SWITCH_PLAYER;
+									}
+								}
+							}
+
+							if (fieldSubtype == FieldSubtype.Chance)
+							{
+								var randomIndex = Random.Range(0, ChanceTasks.Count);
+								Debug.Log(ChanceTasks[randomIndex]);
+								Info.Instance.ShowCard(ChanceTasks[randomIndex]);
+
+								if (ChanceTasks[randomIndex].Contains("GO"))
+								{
+									if (ChanceTasks[randomIndex].Contains("Solaris"))
+									{
+										if (tmp > 1)
+										{
+											int temp = 39 - tmp + 1 + 1;
+											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(1 - tmp);
+										}
+									}
+									else if (ChanceTasks[randomIndex].Contains("Babilon"))
+									{
+										if (tmp > 8)
+										{
+											int temp = 39 - tmp + 8;
+											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(8 - tmp);
+										}
+									}
+									else if (ChanceTasks[randomIndex].Contains("Strzecha"))
+									{
+										if (tmp > 13)
+										{
+											int temp = 39 - tmp + 1 + 13;
+											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(13 - tmp);
+										}
+									}
+									else if (ChanceTasks[randomIndex].Contains("Piast"))
+									{
+										if (tmp > 18)
+										{
+											int temp = 39 - tmp + 1 + 18;
+											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(18 - tmp);
+										}
+									}
+									else if (ChanceTasks[randomIndex].Contains("Ziemowit"))
+									{
+										if (tmp > 23)
+										{
+											int temp = 39 - tmp + 1 + 23;
+											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(23 - tmp);
+										}
+									}
+									else if (ChanceTasks[randomIndex].Contains("Barbara"))
+									{
+										if (tmp > 29)
+										{
+											int temp = 39 - tmp + 1 + 29;
+											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(29 - tmp);
+										}
+									}
+									else if (ChanceTasks[randomIndex].Contains("Elektron"))
+									{
+										if (tmp > 32)
+										{
+											int temp = 39 - tmp + 1 + 32;
+											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(32 - tmp);
+										}
+									}
+									else if (ChanceTasks[randomIndex].Contains("Ondraszek"))
+									{
+										if (tmp > 37)
+										{
+											int temp = 39 - tmp + 1 + 37;
+											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(37 - tmp);
+										}
+									}
+								}
+								else if (ChanceTasks[randomIndex].Contains("COLLECT"))
+								{
+									if (ChanceTasks[randomIndex].Contains("$100"))
+									{
+										entities[activePlayer].player.AddMoney(100);
+										state = State.SWITCH_PLAYER;
+									}
+									else if (ChanceTasks[randomIndex].Contains("$25"))
+									{
+										entities[activePlayer].player.AddMoney(25);
+										state = State.SWITCH_PLAYER;
+									}
+									else if (ChanceTasks[randomIndex].Contains("$50"))
+									{
+										entities[activePlayer].player.AddMoney(50);
+										state = State.SWITCH_PLAYER;
+									}
+								}
+							}
+							else if (fieldType == FieldType.Faculty || fieldType == FieldType.Dorm || fieldType == FieldType.Elevator || fieldType == FieldType.Recreation)
+							{
+								entities[activePlayer].player.BuyPay();
+								state = State.SWITCH_PLAYER;
+							}
+							else if (fieldType == FieldType.Tax)
+							{
+								entities[activePlayer].player.Tax();
+								state = State.SWITCH_PLAYER;
+							}
+							else
+							{
+								state = State.SWITCH_PLAYER;
+							}
+						}
+						if (skipped)
+						{
+							state = State.SWITCH_PLAYER;
+							skipped = false;
+						}
+					}
+					break;
 				case State.WAITING:
 					{
+						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
 
 					}
 					break;
@@ -198,34 +433,8 @@ public class GameManager : MonoBehaviour
 						{
 							StartCoroutine(SwitchPlayer());
 							state = State.WAITING;
+							
 						}
-					}
-					break;
-				case State.BUYING:
-					{
-						isBuying = true;
-						if (turnPossible)
-						{
-							ActivateObject(ref endTurn, true);
-							int tmp = entities[activePlayer].myPawn[0].currentField;
-							Debug.Log(tmp);
-							if (entities[activePlayer].myPawn[0].currentField == 2 || entities[activePlayer].myPawn[0].currentField == 17 || entities[activePlayer].myPawn[0].currentField == 33)
-							{
-								ActivateObject(ref cardInfo, true);
-								var randomIndex = Random.Range(0, RiskTasks.Count);
-								Debug.Log(RiskTasks[randomIndex]);
-								Info.Instance.ShowCard(RiskTasks[randomIndex]);
-							}
-
-							if (entities[activePlayer].myPawn[0].currentField == 7 || entities[activePlayer].myPawn[0].currentField == 22 || entities[activePlayer].myPawn[0].currentField == 36)
-							{
-								ActivateObject(ref cardInfo, true);
-								var randomIndex = Random.Range(0, ChanceTasks.Count);
-								Debug.Log(ChanceTasks[randomIndex]);
-								Info.Instance.ShowCard(ChanceTasks[randomIndex]);
-							}
-						}
-						state = State.WAITING;
 					}
 					break;
 			}
@@ -254,7 +463,6 @@ public class GameManager : MonoBehaviour
 				case State.ROLL_DICE:
 					{
 						
-
 						if (turnPossible)
 						{
 							ActivateObject(ref rollButton, true);
@@ -262,32 +470,20 @@ public class GameManager : MonoBehaviour
 						}
 					}
 					break;
-				case State.WAITING:
-					{
-
-					}
-					break;
-				case State.SWITCH_PLAYER:
-					{
-						if (turnPossible)
-						{
-							ActivateObject(ref cardInfo, false);
-							ActivateObject(ref endTurn, false);
-							isBuying = false;
-							StartCoroutine(SwitchPlayer());
-							state = State.WAITING;
-						}
-					}
-					break;
 				case State.BUYING:
 					{
+						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
 						isBuying = true;
 						if (turnPossible)
 						{
-							ActivateObject(ref endTurn, true);
-							int tmp = entities[activePlayer].myPawn[0].currentField;
+							ActivateObject(ref skipButton, true);
+							int tmp = entities[activePlayer].myPawn[0].fieldId;
 							Debug.Log(tmp);
-							if (entities[activePlayer].myPawn[0].currentField == 2 || entities[activePlayer].myPawn[0].currentField == 17 || entities[activePlayer].myPawn[0].currentField == 33)
+							FieldType fieldType = entities[activePlayer].player.GetCurrentField().GetFieldType();
+							Debug.Log(fieldType);
+							FieldSubtype fieldSubtype = entities[activePlayer].player.GetCurrentField().GetFieldSubtype();
+							Debug.Log(fieldSubtype);
+							if (fieldSubtype == FieldSubtype.Risk)
 							{
 								ActivateObject(ref cardInfo, true);
 								var randomIndex = Random.Range(0, RiskTasks.Count);
@@ -299,11 +495,19 @@ public class GameManager : MonoBehaviour
 									new WaitForSeconds(5);
 									if (RiskTasks[randomIndex].Contains("Tax"))
 									{
-										MovePlayer(38 - entities[activePlayer].myPawn[0].currentField);
+										MovePlayer(38 - tmp);
 									}
 									else if (RiskTasks[randomIndex].Contains("BREAK"))
 									{
-										MovePlayer(30 - entities[activePlayer].myPawn[0].currentField);
+										if (tmp > 30)
+										{
+											int temp = 39 - tmp + 1 + 30;
+											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(30 - tmp);
+										}
 									}
 								}
 								else if (RiskTasks[randomIndex].Contains("COLLECT"))
@@ -311,14 +515,17 @@ public class GameManager : MonoBehaviour
 									if (RiskTasks[randomIndex].Contains("$200"))
 									{
 										entities[activePlayer].player.AddMoney(200);
+										state = State.WAITING;
 									}
 									else if (RiskTasks[randomIndex].Contains("$500"))
 									{
 										entities[activePlayer].player.AddMoney(500);
+										state = State.WAITING;
 									}
-									else if(RiskTasks[randomIndex].Contains("$1000"))
+									else if (RiskTasks[randomIndex].Contains("$1000"))
 									{
 										entities[activePlayer].player.AddMoney(1000);
+										state = State.WAITING;
 									}
 								}
 								else if (RiskTasks[randomIndex].Contains("PAY"))
@@ -326,19 +533,22 @@ public class GameManager : MonoBehaviour
 									if (RiskTasks[randomIndex].Contains("$25"))
 									{
 										entities[activePlayer].player.DeductMoney(25);
+										state = State.WAITING;
 									}
 									else if (RiskTasks[randomIndex].Contains("$50"))
 									{
 										entities[activePlayer].player.DeductMoney(50);
+										state = State.WAITING;
 									}
 									else if (RiskTasks[randomIndex].Contains("$100"))
 									{
 										entities[activePlayer].player.DeductMoney(100);
+										state = State.WAITING;
 									}
 								}
 							}
 
-							if (entities[activePlayer].myPawn[0].currentField == 7 || entities[activePlayer].myPawn[0].currentField == 22 || entities[activePlayer].myPawn[0].currentField == 36)
+							if (fieldSubtype == FieldSubtype.Chance)
 							{
 								ActivateObject(ref cardInfo, true);
 								var randomIndex = Random.Range(0, ChanceTasks.Count);
@@ -349,66 +559,98 @@ public class GameManager : MonoBehaviour
 								{
 									if (ChanceTasks[randomIndex].Contains("Solaris"))
 									{
-										if (entities[activePlayer].myPawn[0].currentField > 1)
+										if (tmp > 1)
 										{
-											int temp = 39 - entities[activePlayer].myPawn[0].currentField + 1 + 1;
+											int temp = 39 - tmp + 1 + 1;
 											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(1 - tmp);
 										}
 									}
 									else if (ChanceTasks[randomIndex].Contains("Babilon"))
 									{
-										if (entities[activePlayer].myPawn[0].currentField > 8)
+										if (tmp > 8)
 										{
-											int temp = 39 - entities[activePlayer].myPawn[0].currentField + 1 + 8;
+											int temp = 39 - tmp + 8;
 											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(8 - tmp);
 										}
 									}
 									else if (ChanceTasks[randomIndex].Contains("Strzecha"))
 									{
-										if (entities[activePlayer].myPawn[0].currentField > 13)
+										if (tmp > 13)
 										{
-											int temp = 39 - entities[activePlayer].myPawn[0].currentField + 1 + 13;
+											int temp = 39 - tmp + 1 + 13;
 											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(13 - tmp);
 										}
 									}
 									else if (ChanceTasks[randomIndex].Contains("Piast"))
 									{
-										if (entities[activePlayer].myPawn[0].currentField > 18)
+										if (tmp > 18)
 										{
-											int temp = 39 - entities[activePlayer].myPawn[0].currentField + 1 + 18;
+											int temp = 39 - tmp + 1 + 18;
 											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(18 - tmp);
 										}
 									}
 									else if (ChanceTasks[randomIndex].Contains("Ziemowit"))
 									{
-										if (entities[activePlayer].myPawn[0].currentField > 23)
+										if (tmp > 23)
 										{
-											int temp = 39 - entities[activePlayer].myPawn[0].currentField + 1 + 23;
+											int temp = 39 - tmp + 1 + 23;
 											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(23 - tmp);
 										}
 									}
 									else if (ChanceTasks[randomIndex].Contains("Barbara"))
 									{
-										if (entities[activePlayer].myPawn[0].currentField > 29)
+										if (tmp > 29)
 										{
-											int temp = 39 - entities[activePlayer].myPawn[0].currentField + 1 + 29;
+											int temp = 39 - tmp + 1 + 29;
 											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(29 - tmp);
 										}
 									}
 									else if (ChanceTasks[randomIndex].Contains("Elektron"))
 									{
-										if (entities[activePlayer].myPawn[0].currentField > 32)
+										if (tmp > 32)
 										{
-											int temp = 39 - entities[activePlayer].myPawn[0].currentField + 1 + 32;
+											int temp = 39 - tmp + 1 + 32;
 											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(32 - tmp);
 										}
 									}
 									else if (ChanceTasks[randomIndex].Contains("Ondraszek"))
 									{
-										if (entities[activePlayer].myPawn[0].currentField > 37)
+										if (tmp > 37)
 										{
-											int temp = 39 - entities[activePlayer].myPawn[0].currentField + 1 + 37;
+											int temp = 39 - tmp + 1 + 37;
 											MovePlayer(temp);
+										}
+										else
+										{
+											MovePlayer(37 - tmp);
 										}
 									}
 								}
@@ -417,19 +659,57 @@ public class GameManager : MonoBehaviour
 									if (ChanceTasks[randomIndex].Contains("$100"))
 									{
 										entities[activePlayer].player.AddMoney(100);
+										state = State.WAITING;
 									}
 									else if (ChanceTasks[randomIndex].Contains("$25"))
 									{
 										entities[activePlayer].player.AddMoney(25);
+										state = State.WAITING;
 									}
 									else if (ChanceTasks[randomIndex].Contains("$50"))
 									{
 										entities[activePlayer].player.AddMoney(50);
+										state = State.WAITING;
 									}
 								}
 							}
+							else if (fieldType == FieldType.Faculty || fieldType == FieldType.Dorm || fieldType == FieldType.Elevator || fieldType == FieldType.Recreation)
+							{
+								ActivateObject(ref buyButton, true);
+								state = State.WAITING;
+							}
+							else if (fieldType == FieldType.Tax)
+							{
+								entities[activePlayer].player.Tax();
+								state = State.WAITING;
+							}
+							else
+							{
+								state = State.WAITING;
+							}
 						}
-						state = State.WAITING;
+					if (skipped){
+							state = State.WAITING;
+							skipped = false;
+						}
+					}
+					break;
+				case State.WAITING:
+					{
+						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
+					}
+					break;
+				case State.SWITCH_PLAYER:
+					{
+						if (turnPossible)
+						{
+							ActivateObject(ref skipButton, false);
+							ActivateObject(ref buyButton, false);
+							ActivateObject(ref cardInfo, false);
+							isBuying = false;
+							StartCoroutine(SwitchPlayer());						
+							state = State.WAITING;
+						}
 					}
 					break;
 			}
@@ -449,26 +729,25 @@ public class GameManager : MonoBehaviour
 
 	public void MovePlayer(int diceNumber)
 	{
-		if (diceNumber < 7)
-		{
-			Info.Instance.ShowMessage(entities[activePlayer].playerName + " has rolled " + diceNumber);
-		}
-
+		Info.Instance.ShowMessage(entities[activePlayer].playerName + " has rolled " + diceNumber);
 		List<PawnScript> player = new List<PawnScript>();
 
 		for(int i = 0; i < entities[activePlayer].myPawn.Length; i++)
 		{
-		
+	
 			player.Add(entities[activePlayer].myPawn[i]);
 		}
+
 		if(player.Count > 0)
 		{
 			player[0].StartTheMove(diceNumber);
 			state = State.WAITING;
 			return;
 		}
+
 		state = State.BUYING;
 	}
+
 
 	IEnumerator SwitchPlayer()
 	{
@@ -478,7 +757,7 @@ public class GameManager : MonoBehaviour
 		}
 		switchingPlayer = true;
 
-		yield return new WaitForSeconds(0.1f);
+		yield return new WaitForSeconds(2);
 
 		SetNextActivePlayer();
 
@@ -514,6 +793,7 @@ public class GameManager : MonoBehaviour
 		state = State.ROLL_DICE;
 	}
 
+
 	void ActivateObject(ref GameObject obj, bool on)
 	{
 		obj.SetActive(on);
@@ -525,10 +805,16 @@ public class GameManager : MonoBehaviour
 
 		RollDice();
 	}
-	public void EndTurn()
+	public void SkipTurn()
 	{
-		ActivateObject(ref cardInfo, false);
-		isBuying = false;
+		ActivateObject(ref skipButton, false);
+		skipped = true;
 		state = State.SWITCH_PLAYER;
+	}
+	public void BuyProperty()
+	{
+		ActivateObject(ref buyButton, false);
+
+		entities[activePlayer].player.BuyPay();
 	}
 }

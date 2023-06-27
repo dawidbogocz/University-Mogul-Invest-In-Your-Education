@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17660016, g: 0.22104703, b: 0.30335507, a: 1}
+  m_IndirectSpecularColor: {r: 0.1765998, g: 0.22104642, b: 0.30335376, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -183,6 +183,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myPawn:
+  - {fileID: 5506286}
+  hasTurn: 0
+  hasWon: 0
+  playerType: 0
   playerName: 
   money: 0
   properties: []
@@ -316,7 +321,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45023836}
-  m_LocalRotation: {x: 0.47318625, y: -0.67359906, z: -0.46459186, w: 0.32636407}
+  m_LocalRotation: {x: 0.47318625, y: -0.673599, z: -0.4645919, w: 0.32636407}
   m_LocalPosition: {x: 1.757, y: -0.558, z: 1.054}
   m_LocalScale: {x: 0.5000001, y: 0.5000001, z: 0.5000001}
   m_ConstrainProportionsScale: 0
@@ -1468,7 +1473,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Skip
+  m_text: Next
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2146,6 +2151,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myPawn:
+  - {fileID: 487923636}
+  hasTurn: 0
+  hasWon: 0
+  playerType: 0
   playerName: 
   money: 0
   properties: []
@@ -2421,35 +2431,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amountOfMoney: {fileID: 1625208760}
-  entities:
-  - playerName: Red
-    player: {fileID: 1239148766}
-    myPawn:
-    - {fileID: 1239148765}
-    hasTurn: 1
-    hasWon: 0
-    playerType: 0
-  - playerName: Green
-    player: {fileID: 635280499}
-    myPawn:
-    - {fileID: 635280498}
-    hasTurn: 0
-    hasWon: 0
-    playerType: 0
-  - playerName: Blue
-    player: {fileID: 487923637}
-    myPawn:
-    - {fileID: 487923636}
-    hasTurn: 0
-    hasWon: 0
-    playerType: 0
-  - playerName: Yellow
-    player: {fileID: 5506287}
-    myPawn:
-    - {fileID: 5506286}
-    hasTurn: 0
-    hasWon: 0
-    playerType: 0
+  players:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   state: 0
   activePlayer: 0
   skipButton: {fileID: 1810189990}
@@ -2595,6 +2581,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myPawn:
+  - {fileID: 635280498}
+  hasTurn: 0
+  hasWon: 0
+  playerType: 0
   playerName: 
   money: 0
   properties: []
@@ -4508,7 +4499,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1202611590}
-  m_LocalRotation: {x: 0.79982054, y: -0.1854907, z: -0.12896827, w: 0.55610037}
+  m_LocalRotation: {x: 0.79982054, y: -0.18549073, z: -0.12896824, w: 0.55610037}
   m_LocalPosition: {x: 0.61, y: 1.5, z: 1.15}
   m_LocalScale: {x: 0.49999994, y: 0.49999994, z: 0.50000006}
   m_ConstrainProportionsScale: 0
@@ -4803,6 +4794,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myPawn:
+  - {fileID: 1239148765}
+  hasTurn: 0
+  hasWon: 0
+  playerType: 0
   playerName: 
   money: 0
   properties: []
@@ -7533,7 +7529,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1836909259}
-  m_LocalRotation: {x: 0.68747413, y: 0.42434612, z: 0.309546, w: 0.50148875}
+  m_LocalRotation: {x: 0.6874742, y: 0.42434618, z: 0.30954602, w: 0.50148875}
   m_LocalPosition: {x: -1.53, y: 0.69, z: 1.04}
   m_LocalScale: {x: 0.50000006, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0

@@ -413,9 +413,9 @@ public class GameManager : MonoBehaviour
 
 					}
 					break;
-				case State.SWITCH_PLAYER:
-					{
-						if (turnPossible)
+				case State.SWITCH_PLAYER: {
+                        amountOfMoney.text = "...";
+                        if (turnPossible)
 						{
 							StartCoroutine(SwitchPlayer());
 							state = State.WAITING;

@@ -5,22 +5,6 @@ using UnityEditor;
 using UnityEngine;
 using TMPro;
 
-[System.Serializable]
-public class Entity
-{
-	public string playerName;
-	public Player player;
-	public PawnScript[] myPawn;
-	public bool hasTurn;
-	public bool hasWon;
-	public enum PlayerTypes
-	{
-		HUMAN,
-		CPU,
-		OTHER
-	}
-	public PlayerTypes playerType;
-}
 public enum State
 {
 	ROLL_DICE,
@@ -35,7 +19,7 @@ public class GameManager : MonoBehaviour
 	public TMP_Text amountOfMoney;
 	
     
-    public List<Entity> entities = new List<Entity>();
+    public List<Player> players = new List<Player>();
     public static List<GameField> fields = new List<GameField>();
 
     public State state;
@@ -66,14 +50,17 @@ public class GameManager : MonoBehaviour
 	{
 		Instance = this;
 
-		for (int i = 0; i < entities.Count; i++)
+        players[0] = GameObject.Find("Red").GetComponent<Player>();
+		players[1] = GameObject.Find("Green").GetComponent<Player>();
+		players[2] = GameObject.Find("Blue").GetComponent<Player>();
+		players[3] = GameObject.Find("Yellow").GetComponent<Player>();
+
+		for (int i = 0; i < players.Count; i++)
 		{
 			if (SaveSettings.players[i] == "HUMAN") {
-				entities[i].playerType = Entity.PlayerTypes.HUMAN;
-				entities[i].player = new Player(entities[i].playerName);
+				players[i].playerType = PlayerTypes.HUMAN;
 			} else if (SaveSettings.players[i] == "CPU") {
-				entities[i].playerType = Entity.PlayerTypes.CPU;
-				entities[i].player = new Player(entities[i].playerName);
+				players[i].playerType = PlayerTypes.CPU;
 			}
 		}
 	}
@@ -83,16 +70,17 @@ public class GameManager : MonoBehaviour
 		ActivateButton(false);
 		ActivateBuyingStateButtons(false);
 		skipped = false;
-		int randomPlayer = Random.Range(0, entities.Count);
-		activePlayer = randomPlayer;
-		Info.Instance.ShowMessage(entities[activePlayer].playerName + " starts first!");
+		int randomPlayer = Random.Range(0, players.Count);
+        activePlayer = randomPlayer;
+		Debug.Log("START ID: " + activePlayer);
+        Info.Instance.ShowMessage(players[activePlayer].playerName + " starts first!");
     }
 
     void Update()
     {
-		if (entities[activePlayer].playerType == Entity.PlayerTypes.CPU)
+		if (players[activePlayer].playerType == PlayerTypes.CPU)
 		{
-			switch (entities[activePlayer].playerName)
+			switch (players[activePlayer].playerName)
 			{
 				case "Red":
 					if (Red.transform.rotation == Quaternion.Euler(0f, 0f, 0f))
@@ -181,19 +169,19 @@ public class GameManager : MonoBehaviour
 					break;
 				case State.BUYING:
 					{
-						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
+						amountOfMoney.text = "$" + players[activePlayer].money.ToString();
 						state = State.WAITING;
 					}
 					break;
 				case State.WAITING:
 					{
-						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
+						amountOfMoney.text = "$" + players[activePlayer].money.ToString();
 
 					}
 					break;
-				case State.SWITCH_PLAYER:
-					{
-						if (turnPossible)
+				case State.SWITCH_PLAYER: {
+                        amountOfMoney.text = "...";
+                        if (turnPossible)
 						{
 							StartCoroutine(SwitchPlayer());
 							state = State.WAITING;
@@ -203,21 +191,21 @@ public class GameManager : MonoBehaviour
 					break;
 			}
 		}
-		if (entities[activePlayer].playerType == Entity.PlayerTypes.HUMAN)
+		if (players[activePlayer].playerType == PlayerTypes.HUMAN)
 		{
-			if (entities[activePlayer].playerName == "Red")
+			if (players[activePlayer].playerName == "Red")
 			{
 				cameraScript.SwitchCamera(cameraScript.redCam);
 			}
-			else if (entities[activePlayer].playerName == "Green")
+			else if (players[activePlayer].playerName == "Green")
 			{
 				cameraScript.SwitchCamera(cameraScript.greenCam);
 			}
-			else if (entities[activePlayer].playerName == "Blue")
+			else if (players[activePlayer].playerName == "Blue")
 			{
 				cameraScript.SwitchCamera(cameraScript.blueCam);
 			}
-			else if (entities[activePlayer].playerName == "Yellow")
+			else if (players[activePlayer].playerName == "Yellow")
 			{
 				cameraScript.SwitchCamera(cameraScript.yellowCam);
 			}
@@ -237,7 +225,7 @@ public class GameManager : MonoBehaviour
 				case State.BUYING:
 					{
 						ActivateBuyingStateButtons(true);
-						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
+						amountOfMoney.text = "$" + players[activePlayer].money.ToString();
 						if(skipped){
 							state = State.WAITING;
 							skipped = false;
@@ -248,7 +236,7 @@ public class GameManager : MonoBehaviour
 				case State.WAITING:
 					{
 						ActivateBuyingStateButtons(true);
-						amountOfMoney.text = entities[activePlayer].player.money.ToString() + " $";
+						amountOfMoney.text = "$" + players[activePlayer].money.ToString();
 					}
 					break;
 				case State.SWITCH_PLAYER:
@@ -279,18 +267,18 @@ public class GameManager : MonoBehaviour
 
 	public void MovePlayer(int diceNumber)
 	{
-		Info.Instance.ShowMessage(entities[activePlayer].playerName + " has rolled " + diceNumber);
-		List<PawnScript> player = new List<PawnScript>();
+		Info.Instance.ShowMessage(players[activePlayer].playerName + " has rolled " + diceNumber);
+		List<PawnScript> pawn = new List<PawnScript>();
 
-		for(int i = 0; i < entities[activePlayer].myPawn.Length; i++)
+		for(int i = 0; i < players[activePlayer].myPawn.Length; i++)
 		{
 	
-			player.Add(entities[activePlayer].myPawn[i]);
+			pawn.Add(players[activePlayer].myPawn[i]);
 		}
 
-		if(player.Count > 0)
+		if(pawn.Count > 0)
 		{
-			player[0].StartTheMove(diceNumber);
+			pawn[0].StartTheMove(diceNumber);
 			state = State.WAITING;
 			return;
 		}
@@ -319,18 +307,18 @@ public class GameManager : MonoBehaviour
 	void SetNextActivePlayer()
 	{
 		activePlayer++;
-		activePlayer %= entities.Count;
+		activePlayer %= players.Count;
 
 		int available = 0;
-		for(int i = 0; i < entities.Count; i++)
+		for(int i = 0; i < players.Count; i++)
 		{
-			if (!entities[i].hasWon)
+			if (!players[i].hasWon)
 			{
 				available++;
 			}
 		}
 
-		if (entities[activePlayer].hasWon && available > 1)
+		if (players[activePlayer].hasWon && available > 1)
 		{
 			SetNextActivePlayer();
 			return;
@@ -340,7 +328,7 @@ public class GameManager : MonoBehaviour
 			state = State.WAITING;
 			return;
 		}
-		Info.Instance.ShowMessage(entities[activePlayer].playerName + "'s turn!");
+		Info.Instance.ShowMessage(players[activePlayer].playerName + "'s turn!");
 		state = State.ROLL_DICE;
 	}
 

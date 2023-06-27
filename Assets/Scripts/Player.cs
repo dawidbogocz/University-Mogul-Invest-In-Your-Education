@@ -3,7 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public enum PlayerTypes {
+    HUMAN,
+    CPU,
+    OTHER
+}
+
 public class Player : MonoBehaviour {
+    public PawnScript[] myPawn;
+    public bool hasTurn;
+    public bool hasWon;
+    public PlayerTypes playerType;
     public string playerName;
     public int money;
     public List<GameField> properties;

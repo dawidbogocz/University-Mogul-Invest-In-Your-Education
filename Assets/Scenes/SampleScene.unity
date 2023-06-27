@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17660016, g: 0.22104703, b: 0.30335507, a: 1}
+  m_IndirectSpecularColor: {r: 0.1765998, g: 0.22104642, b: 0.30335376, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -132,8 +132,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5506285}
-  - component: {fileID: 5506286}
   - component: {fileID: 5506287}
+  - component: {fileID: 5506288}
   m_Layer: 0
   m_Name: Yellow
   m_TagString: Untagged
@@ -157,7 +157,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5506286
+--- !u!114 &5506287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5506284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myPawn:
+  - {fileID: 5506288}
+  hasTurn: 0
+  hasWon: 0
+  playerType: 0
+  playerName: 
+  money: 0
+  properties: []
+  isInJail: 0
+  jailTurns: 0
+--- !u!114 &5506288
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,23 +193,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPath: {fileID: 915057705}
   fieldId: 0
---- !u!114 &5506287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5506284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerName: 
-  money: 0
-  properties: []
-  isInJail: 0
-  jailTurns: 0
 --- !u!114 &16324931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,7 +321,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45023836}
-  m_LocalRotation: {x: 0.47318625, y: -0.67359906, z: -0.46459186, w: 0.32636407}
+  m_LocalRotation: {x: 0.47318625, y: -0.673599, z: -0.4645919, w: 0.32636407}
   m_LocalPosition: {x: 1.757, y: -0.558, z: 1.054}
   m_LocalScale: {x: 0.5000001, y: 0.5000001, z: 0.5000001}
   m_ConstrainProportionsScale: 0
@@ -1960,8 +1965,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 487923635}
-  - component: {fileID: 487923636}
   - component: {fileID: 487923637}
+  - component: {fileID: 487923638}
   m_Layer: 0
   m_Name: Blue
   m_TagString: Untagged
@@ -1985,7 +1990,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &487923636
+--- !u!114 &487923637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487923634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myPawn:
+  - {fileID: 487923638}
+  hasTurn: 0
+  hasWon: 0
+  playerType: 0
+  playerName: 
+  money: 0
+  properties: []
+  isInJail: 0
+  jailTurns: 0
+--- !u!114 &487923638
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1999,23 +2026,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPath: {fileID: 915057705}
   fieldId: 0
---- !u!114 &487923637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487923634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerName: 
-  money: 0
-  properties: []
-  isInJail: 0
-  jailTurns: 0
 --- !u!1 &529047439 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 826556020312690213, guid: 267eeaa14b741c24294e913768c8f478,
@@ -2286,35 +2296,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amountOfMoney: {fileID: 1625208760}
-  entities:
-  - playerName: Red
-    player: {fileID: 0}
-    myPawn:
-    - {fileID: 1239148765}
-    hasTurn: 1
-    hasWon: 0
-    playerType: 1
-  - playerName: Green
-    player: {fileID: 0}
-    myPawn:
-    - {fileID: 635280498}
-    hasTurn: 0
-    hasWon: 0
-    playerType: 1
-  - playerName: Blue
-    player: {fileID: 0}
-    myPawn:
-    - {fileID: 487923636}
-    hasTurn: 0
-    hasWon: 0
-    playerType: 1
-  - playerName: Yellow
-    player: {fileID: 0}
-    myPawn:
-    - {fileID: 5506286}
-    hasTurn: 0
-    hasWon: 0
-    playerType: 1
+  players:
+  - {fileID: 1239148766}
+  - {fileID: 635280499}
+  - {fileID: 487923637}
+  - {fileID: 5506287}
   state: 0
   activePlayer: 0
   skipButton: {fileID: 1810189990}
@@ -2406,8 +2392,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 635280497}
-  - component: {fileID: 635280498}
   - component: {fileID: 635280499}
+  - component: {fileID: 635280500}
   m_Layer: 0
   m_Name: Green
   m_TagString: Untagged
@@ -2431,7 +2417,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &635280498
+--- !u!114 &635280499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635280496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myPawn:
+  - {fileID: 635280500}
+  hasTurn: 0
+  hasWon: 0
+  playerType: 0
+  playerName: 
+  money: 0
+  properties: []
+  isInJail: 0
+  jailTurns: 0
+--- !u!114 &635280500
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2445,23 +2453,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPath: {fileID: 915057705}
   fieldId: 0
---- !u!114 &635280499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 635280496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerName: 
-  money: 0
-  properties: []
-  isInJail: 0
-  jailTurns: 0
 --- !u!114 &640553405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4277,7 +4268,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1202611590}
-  m_LocalRotation: {x: 0.79982054, y: -0.1854907, z: -0.12896827, w: 0.55610037}
+  m_LocalRotation: {x: 0.79982054, y: -0.18549073, z: -0.12896824, w: 0.55610037}
   m_LocalPosition: {x: 0.61, y: 1.5, z: 1.15}
   m_LocalScale: {x: 0.49999994, y: 0.49999994, z: 0.50000006}
   m_ConstrainProportionsScale: 0
@@ -4521,8 +4512,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1239148764}
-  - component: {fileID: 1239148765}
   - component: {fileID: 1239148766}
+  - component: {fileID: 1239148767}
   m_Layer: 0
   m_Name: Red
   m_TagString: Untagged
@@ -4546,7 +4537,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1239148765
+--- !u!114 &1239148766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239148763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myPawn:
+  - {fileID: 1239148767}
+  hasTurn: 0
+  hasWon: 0
+  playerType: 0
+  playerName: 
+  money: 0
+  properties: []
+  isInJail: 0
+  jailTurns: 0
+--- !u!114 &1239148767
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4560,23 +4573,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPath: {fileID: 915057705}
   fieldId: 0
---- !u!114 &1239148766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1239148763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8c506fb934e5a14091942bea3f306a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerName: 
-  money: 0
-  properties: []
-  isInJail: 0
-  jailTurns: 0
 --- !u!1001 &1252010709
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7316,7 +7312,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1836909259}
-  m_LocalRotation: {x: 0.6874742, y: 0.42434612, z: 0.30954596, w: 0.5014888}
+  m_LocalRotation: {x: 0.68747413, y: 0.42434618, z: 0.30954602, w: 0.5014887}
   m_LocalPosition: {x: -1.53, y: 0.69, z: 1.04}
   m_LocalScale: {x: 0.50000006, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0

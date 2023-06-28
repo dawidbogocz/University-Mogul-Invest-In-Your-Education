@@ -7,10 +7,11 @@ public class PawnScript : MonoBehaviour
 {
 
     public PathScript currentPath;
-    public int currentField;
+    public int fieldId;
     int steps;
     bool isMoving;
     bool hasTurn;
+    Player player;
 
 	public IEnumerator Move(int diceNumber)
     {
@@ -20,13 +21,13 @@ public class PawnScript : MonoBehaviour
         }
         isMoving = true;
 
-        while (steps > 0)
-        {
-            currentField++;
-            currentField %= currentPath.childNodeList.Count;
-            Vector3 nextFieldPosition = currentPath.childNodeList[currentField].position;
-            Vector3 fieldSize = currentPath.childNodeList[currentField].GetComponent<MeshRenderer>().bounds.size;
-            float fieldHeight = currentPath.childNodeList[currentField].GetComponent<MeshRenderer>().bounds.max.y;
+        while (steps > 0) {
+			GameManager.Instance.skipButton.SetActive(false);
+			fieldId++;
+            fieldId %= currentPath.childNodeList.Count;
+            Vector3 nextFieldPosition = currentPath.childNodeList[fieldId].position;
+            Vector3 fieldSize = currentPath.childNodeList[fieldId].GetComponent<MeshRenderer>().bounds.size;
+            float fieldHeight = currentPath.childNodeList[fieldId].GetComponent<MeshRenderer>().bounds.max.y;
             nextFieldPosition.y += fieldHeight + 0.0001f;
             Vector3 nextPosition = nextFieldPosition;
             nextPosition.x += Random.Range(-fieldSize.x * 0.1f, fieldSize.x * 0.1f);
@@ -49,21 +50,29 @@ public class PawnScript : MonoBehaviour
             yield return MoveToNextNode(nextPosition);
             yield return new WaitForSeconds(0.25f);
             steps--;
+            //player.ReachedStart();
         }
 
-        if(diceNumber < 6)
-        {
-			GameManager.Instance.state = State.SWITCH_PLAYER;
+		/*if (diceNumber < 6)
+		{
+			GameManager.Instance.state = State.BUYING;
 		}
-        else
-        {
+		else if (diceNumber == 6)
+		{
 			GameManager.Instance.state = State.ROLL_DICE;
 		}
+		else
+		{
+			GameManager.Instance.state = State.SWITCH_PLAYER;
+		}*/
 
-        isMoving = false;
-    }
+		isMoving = false;
+        player.SetCurrentField(fieldId);
+		GameManager.Instance.state = State.BUYING;
+		//player.Action();
+	}
 
-	IEnumerator MoveToNextNode(Vector3 goal)
+    IEnumerator MoveToNextNode(Vector3 goal)
 	{
 		Vector3 startPosition = transform.position;
 		float duration = 0.5f;
@@ -74,7 +83,7 @@ public class PawnScript : MonoBehaviour
 
 		transform.DOMove(goal, duration * 0.25f).SetDelay(duration * 0.25f).SetEase(Ease.InOutQuad);
 
-		if ((currentField % 10) == 0)
+		if ((fieldId % 10) == 0)
 		{
 			Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 90f, 0f);
             if (targetRotation.eulerAngles.y == 360f)
@@ -92,9 +101,10 @@ public class PawnScript : MonoBehaviour
 		yield return new WaitForSeconds(duration * 0.25f);
 	}
 
-	public void StartTheMove(int diceNumber)
-	{
+    
+	public void StartTheMove(int diceNumber) {
         steps = diceNumber;
+        player = GetComponent<Player>();
         StartCoroutine(Move(steps));
-	}
+    }
 }

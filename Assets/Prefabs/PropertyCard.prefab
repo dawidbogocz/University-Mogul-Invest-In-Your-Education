@@ -282,7 +282,6 @@ GameObject:
   - component: {fileID: 7733630204161428087}
   - component: {fileID: 6328463696380955433}
   - component: {fileID: 3846481741589234602}
-  - component: {fileID: 7190866953673882441}
   m_Layer: 5
   m_Name: PropertyCard
   m_TagString: Untagged
@@ -364,18 +363,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
---- !u!114 &7190866953673882441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8567604283317481774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a11f5ae273fe2414caad15099ba2db23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8984513543642336392
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,7 +462,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

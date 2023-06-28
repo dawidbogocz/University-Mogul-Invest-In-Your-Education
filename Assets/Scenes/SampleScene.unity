@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17660016, g: 0.22104703, b: 0.30335507, a: 1}
+  m_IndirectSpecularColor: {r: 0.1765998, g: 0.22104642, b: 0.30335376, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -208,7 +208,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 5
   cost: 200
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!1 &28393320
@@ -297,7 +296,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 8
   cost: 100
-  rent: 0
   fieldText: {fileID: 217478827}
   isForSale: 0
 --- !u!1 &45023836
@@ -324,7 +322,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45023836}
-  m_LocalRotation: {x: 0.47318625, y: -0.673599, z: -0.4645919, w: 0.32636407}
+  m_LocalRotation: {x: 0.47318625, y: -0.67359906, z: -0.46459186, w: 0.32636407}
   m_LocalPosition: {x: 1.757, y: -0.558, z: 1.054}
   m_LocalScale: {x: 0.5000001, y: 0.5000001, z: 0.5000001}
   m_ConstrainProportionsScale: 0
@@ -385,7 +383,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 21
   cost: 240
-  rent: 0
   fieldText: {fileID: 1880463772}
   isForSale: 0
 --- !u!114 &84012998
@@ -402,7 +399,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 16
   cost: 180
-  rent: 0
   fieldText: {fileID: 917985826}
   isForSale: 0
 --- !u!1 &119013959 stripped
@@ -510,7 +506,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 25
   cost: 200
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!114 &146145866
@@ -527,7 +522,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 18
   cost: 180
-  rent: 0
   fieldText: {fileID: 1219266578}
   isForSale: 0
 --- !u!1 &147081554
@@ -1519,7 +1513,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 26
   cost: 260
-  rent: 0
   fieldText: {fileID: 1686659324}
   isForSale: 0
 --- !u!1 &247657005
@@ -1572,7 +1565,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 30
   cost: 0
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!1 &258005021
@@ -1669,7 +1661,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 36
   cost: 0
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!1001 &304709113
@@ -1960,7 +1951,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 22
   cost: 0
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!1 &330585543
@@ -2017,7 +2007,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 45
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2042,8 +2032,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0, y: 0.9636305, z: -0.26723832, w: 0}
-  m_LocalPosition: {x: 0, y: 10, z: 20}
+  m_LocalRotation: {x: 0.09135677, y: -0.8230917, z: 0.13844346, w: 0.5431459}
+  m_LocalPosition: {x: 12.304002, y: 2.155, z: 10.584999}
   m_LocalScale: {x: 0.15000004, y: 0.15000002, z: 0.15000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2426,7 +2416,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 15
   cost: 200
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!114 &482005704
@@ -2443,7 +2432,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 23
   cost: 220
-  rent: 0
   fieldText: {fileID: 1968268957}
   isForSale: 0
 --- !u!1 &487923634
@@ -2819,7 +2807,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 14
   cost: 160
-  rent: 0
   fieldText: {fileID: 1781713959}
   isForSale: 0
 --- !u!1 &562550916
@@ -3105,6 +3092,7 @@ MonoBehaviour:
   rollButton: {fileID: 562550916}
   cardInfo: {fileID: 750794291}
   diceScript: {fileID: 3469287836992462980}
+  inventoryScript: {fileID: 1203165867}
   cameraScript: {fileID: 330585548}
   Red: {fileID: 1239148763}
   Green: {fileID: 635280496}
@@ -3181,7 +3169,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 10
   cost: 0
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!1 &635280496
@@ -3269,7 +3256,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 38
   cost: 0
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!114 &661048328
@@ -3286,7 +3272,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 35
   cost: 200
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!1 &669843940
@@ -3592,7 +3577,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 37
   cost: 350
-  rent: 0
   fieldText: {fileID: 1606299905}
   isForSale: 0
 --- !u!1001 &788572641
@@ -3687,7 +3671,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 19
   cost: 200
-  rent: 0
   fieldText: {fileID: 1463662804}
   isForSale: 0
 --- !u!1 &832575517
@@ -3958,7 +3941,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 6
   cost: 100
-  rent: 0
   fieldText: {fileID: 1146706550}
   isForSale: 0
 --- !u!1 &850987137 stripped
@@ -4670,7 +4652,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 28
   cost: 150
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!1001 &1014010492
@@ -4818,7 +4799,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 40
   cost: 0
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!1 &1084126461 stripped
@@ -5380,7 +5360,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1202611590}
-  m_LocalRotation: {x: 0.79982054, y: -0.18549073, z: -0.12896824, w: 0.55610037}
+  m_LocalRotation: {x: 0.79982054, y: -0.1854907, z: -0.12896827, w: 0.55610037}
   m_LocalPosition: {x: 0.61, y: 1.5, z: 1.15}
   m_LocalScale: {x: 0.49999994, y: 0.49999994, z: 0.50000006}
   m_ConstrainProportionsScale: 0
@@ -5510,7 +5490,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 29
   cost: 260
-  rent: 0
   fieldText: {fileID: 2014868246}
   isForSale: 0
 --- !u!1 &1219266576
@@ -6559,7 +6538,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 11
   cost: 140
-  rent: 0
   fieldText: {fileID: 2092166289}
   isForSale: 0
 --- !u!1 &1408885505
@@ -7472,7 +7450,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 24
   cost: 220
-  rent: 0
   fieldText: {fileID: 1315585171}
   isForSale: 0
 --- !u!1 &1534596357
@@ -7599,7 +7576,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 33
   cost: 0
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!114 &1580642220
@@ -7616,7 +7592,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 7
   cost: 0
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!114 &1603082083
@@ -7633,7 +7608,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 39
   cost: 400
-  rent: 0
   fieldText: {fileID: 1089372305}
   isForSale: 0
 --- !u!1 &1603845253
@@ -8022,7 +7996,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 31
   cost: 320
-  rent: 0
   fieldText: {fileID: 1452251380}
   isForSale: 0
 --- !u!1 &1657898719
@@ -8383,7 +8356,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 27
   cost: 280
-  rent: 0
   fieldText: {fileID: 176289805}
   isForSale: 0
 --- !u!114 &1718025585
@@ -8400,7 +8372,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 17
   cost: 0
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!114 &1718257459
@@ -8417,7 +8388,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 9
   cost: 120
-  rent: 0
   fieldText: {fileID: 1884933989}
   isForSale: 0
 --- !u!1 &1762655479
@@ -9243,7 +9213,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 13
   cost: 140
-  rent: 0
   fieldText: {fileID: 1349718683}
   isForSale: 0
 --- !u!1 &1884933987
@@ -9432,7 +9401,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 34
   cost: 300
-  rent: 0
   fieldText: {fileID: 1968240501}
   isForSale: 0
 --- !u!114 &1931482861
@@ -9449,7 +9417,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 32
   cost: 300
-  rent: 0
   fieldText: {fileID: 1657898721}
   isForSale: 0
 --- !u!1 &1950115171
@@ -10163,7 +10130,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 12
   cost: 150
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!1 &2052465719
@@ -10441,7 +10407,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 20
   cost: 0
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!1 &2092166287
@@ -11423,7 +11388,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 4
   cost: 0
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!114 &5172721647748476131
@@ -11440,7 +11404,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   cost: 60
-  rent: 0
   fieldText: {fileID: 669843942}
   isForSale: 0
 --- !u!114 &5172721647748476132
@@ -11457,7 +11420,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   cost: 0
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0
 --- !u!114 &5172721647748476133
@@ -11474,7 +11436,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   cost: 60
-  rent: 0
   fieldText: {fileID: 1084909316}
   isForSale: 0
 --- !u!114 &5172721647748476134
@@ -11491,6 +11452,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   cost: 0
-  rent: 0
   fieldText: {fileID: 0}
   isForSale: 0

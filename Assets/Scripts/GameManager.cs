@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     int diceNumber;
 
 	public DiceScript diceScript;
-
+	public InventoryScript inventoryScript;
 	public CameraScript cameraScript;
 
 	bool skipped;
@@ -89,8 +89,9 @@ public class GameManager : MonoBehaviour
 		skipped = false;
 		int randomPlayer = Random.Range(0, players.Count);
 		activePlayer = randomPlayer;
-		Info.Instance.ShowMessage(players[activePlayer].playerName + " starts first!");
-    }
+        Info.Instance.ShowMessage(players[activePlayer].playerName + " starts first!");
+		inventoryScript.switchPlayersInventory(activePlayer);
+	}
 
     void Update()
     {
@@ -643,8 +644,9 @@ public class GameManager : MonoBehaviour
 		{
 			state = State.WAITING;
 			return;
-		}
-		Info.Instance.ShowMessage(players[activePlayer].playerName + "'s turn!");
+        }
+        Info.Instance.ShowMessage(players[activePlayer].playerName + "'s turn!");
+		inventoryScript.switchPlayersInventory(activePlayer);
 		state = State.ROLL_DICE;
 	}
 

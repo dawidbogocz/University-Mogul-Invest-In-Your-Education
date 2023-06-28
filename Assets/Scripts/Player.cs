@@ -35,37 +35,35 @@ public class Player : MonoBehaviour {
         
     }
 
-    public void BuyPay()
-    {
-		if (currentField.isForSale && currentField.GetOwner() == null)
-		{
-			if (this.DeductMoney(currentField.cost))
-			{
-				currentField.SetOwner(this);
-				this.AddProperty(currentField.id);
+    public void BuyPay() {
+        if (currentField.isForSale && currentField.GetOwner() == null) {
+            if (this.DeductMoney(currentField.cost)) {
+                currentField.SetOwner(this);
+                this.AddProperty(currentField.id);
                 inventory.addCard(this, currentField.id);
-				Debug.Log(playerName + " bought " + currentField.GetFieldName());
-			}
-		}
-		if (currentField.GetOwner() != null && !this.properties.Any(field => field.id == currentField.id))
-		{
-			{
-				Player owner = currentField.GetOwner();
+                Debug.Log(playerName + " bought " + currentField.GetFieldName());
+            }
+        }
+    }
 
-				int rent = currentField.GetRent();
-				bool rentPaid = this.DeductMoney(rent);
-				if (owner != null && owner != this)
-				{
-					if (rentPaid)
-					{
-						owner.AddMoney(rent);
-					}
+    public void PayRent() {
+        if (currentField.GetOwner() != null && !this.properties.Any(field => field.id == currentField.id)) {
+            {
+                Player owner = currentField.GetOwner();
 
-					Debug.Log(this.playerName + " paid rent to " + owner.playerName);
-				}
-			}
-		}
-	}
+                int rent = currentField.GetRent();
+                bool rentPaid = this.DeductMoney(rent);
+                if (owner != null && owner != this) {
+                    if (rentPaid) {
+                        owner.AddMoney(rent);
+                    }
+
+                    Debug.Log(this.playerName + " paid rent to " + owner.playerName);
+                }
+            }
+        }
+    }
+
     public void Tax()
     {
 		if (currentField.GetFieldType() == FieldType.Tax)

@@ -14,7 +14,8 @@ public enum FieldType {
     SpecialCard,
     Tax,
     Elevator,
-    Prison
+    Prison,
+    Superpower
 }
 
 // Enum for the field subtypes
@@ -151,12 +152,11 @@ public class GameField : MonoBehaviour
             } else {
                 subtype = FieldSubtype.Chance;
             }
-        } else if (id == 10 || id == 12 || id == 20 || id == 28 || id == 30) {
+        } else if (id == 10 || id == 20 || id == 30) {
             type = FieldType.Field;
         } else if (id == 5 || id == 15 || id == 25 || id == 35) {
             type = FieldType.Elevator;
-        }
-        else if (id == 4 || id == 38) {
+        } else if (id == 4 || id == 38) {
             type = FieldType.Tax;
 
             if (id == 38) {
@@ -166,8 +166,11 @@ public class GameField : MonoBehaviour
             type = FieldType.Prison;
         } else if (id == 0) {
             type = FieldType.Start;
-        } else { 
-            type = FieldType.None; }
+        } else if (id == 12 || id == 28) {
+            type = FieldType.Superpower;
+        } else {
+            type = FieldType.None;
+        }
     }
 
 }

@@ -385,7 +385,7 @@ public class GameManager : MonoBehaviour
 									}
 								}
 							}
-							else if (fieldType == FieldType.Faculty || fieldType == FieldType.Dorm || fieldType == FieldType.Elevator || fieldType == FieldType.Recreation)
+							else if (fieldType == FieldType.Faculty || fieldType == FieldType.Dorm || fieldType == FieldType.Elevator || fieldType == FieldType.Recreation || fieldType == FieldType.Superpower)
 							{
 								players[activePlayer].BuyPay();
 								state = State.SWITCH_PLAYER;

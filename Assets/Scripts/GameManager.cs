@@ -358,7 +358,6 @@ public class GameManager : MonoBehaviour
 				case State.WAITING:
 					{
 						amountOfMoney.text = "$" + players[activePlayer].money.ToString();
-
 					}
 					break;
 				case State.SWITCH_PLAYER: {
@@ -366,7 +365,6 @@ public class GameManager : MonoBehaviour
 						{
 							StartCoroutine(SwitchPlayer());
 							state = State.WAITING;
-							
 						}
 					}
 					break;

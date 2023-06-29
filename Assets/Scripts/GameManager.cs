@@ -55,24 +55,25 @@ public class GameManager : MonoBehaviour
 	private List<string> RiskTasks;
 	private List<string> ChanceTasks;
 
-    private void Awake() {
-        Instance = this;
+	private void Awake()
+	{
+		Instance = this;
 
-        players[0] = GameObject.Find("Red").GetComponent<Player>();
-        players[1] = GameObject.Find("Green").GetComponent<Player>();
-        players[2] = GameObject.Find("Blue").GetComponent<Player>();
-        players[3] = GameObject.Find("Yellow").GetComponent<Player>();
+		players[0] = GameObject.Find("Red").GetComponent<Player>();
+		players[1] = GameObject.Find("Green").GetComponent<Player>();
+		players[2] = GameObject.Find("Blue").GetComponent<Player>();
+		players[3] = GameObject.Find("Yellow").GetComponent<Player>();
 
-        for (int i = 0; i < players.Count; i++) {
-            if (SaveSettings.players[i] == "HUMAN") {
-                players[i].playerType = PlayerTypes.HUMAN;
-            } else if (SaveSettings.players[i] == "CPU") {
-                players[i].playerType = PlayerTypes.CPU;
-            }
-        }
+		for (int i = 0; i < players.Count; i++) {
+			if (SaveSettings.players[i] == "HUMAN") {
+				players[i].playerType = PlayerTypes.HUMAN;
+			} else if (SaveSettings.players[i] == "CPU") {
+				players[i].playerType = PlayerTypes.CPU;
+			}
+		}
 	}
 
-    void Start()
+	void Start()
     {
 		ActivateObject(ref rollButton, false);
 		ActivateObject(ref cardInfo, false);
@@ -89,7 +90,7 @@ public class GameManager : MonoBehaviour
 		int randomPlayer = Random.Range(0, players.Count);
 		activePlayer = randomPlayer;
         Info.Instance.ShowMessage(players[activePlayer].playerName + " starts first!");
-        //inventoryScript.switchPlayersInventory(activePlayer);
+		inventoryScript.switchPlayersInventory(activePlayer);
 	}
 
     void Update()
@@ -531,7 +532,7 @@ public class GameManager : MonoBehaviour
                                         state = State.WAITING;
                                     }
                                 }
-                            } else if (fieldType == FieldType.Faculty || fieldType == FieldType.Dorm || fieldType == FieldType.Elevator || fieldType == FieldType.Recreation || fieldType == FieldType.Superpower) {
+                            } else if (fieldType == FieldType.Faculty || fieldType == FieldType.Dorm || fieldType == FieldType.Elevator || fieldType == FieldType.Recreation) {
                                 ActivateObject(ref buyButton, true);
                                 state = State.WAITING;
                             } else if (fieldType == FieldType.Tax) {

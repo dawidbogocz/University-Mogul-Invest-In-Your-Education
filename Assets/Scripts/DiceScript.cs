@@ -78,7 +78,7 @@ public class DiceScript : MonoBehaviour
             if (side.OnGround())
             {
                 diceValue = side.sideValue;
-                GameManager.Instance.MovePlayer(1);
+                GameManager.Instance.MovePlayer(diceValue);
             }
         }
     }

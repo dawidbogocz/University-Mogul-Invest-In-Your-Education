@@ -39,14 +39,13 @@ public enum FieldColor {
     None
 }
 
-public class GameField : MonoBehaviour
-{
+public class GameField : MonoBehaviour {
 
     public int id;
     public int cost;
     public TextMeshPro fieldText;
     public bool isForSale;
-    private int rent;
+    [SerializeField] private int rent;
     private string fieldName;
     private Player owner;
     private FieldType type;
@@ -60,21 +59,13 @@ public class GameField : MonoBehaviour
         SetColor(id);
         SetType(id);
 
-        if (type == FieldType.Tax) {
-            if (subtype == FieldSubtype.Retake) {
-                rent = 70 * 6;
-            } else {
-                rent = 400;
-            }
-        } else {
-            rent = cost / 2;
-        }
-
-        if(cost != 0) {
+        if (cost != 0) {
             isForSale = true;
         } else {
             isForSale = false;
         }
+
+        SetRent();
 
         if (type == FieldType.Dorm || type == FieldType.Faculty || type == FieldType.Recreation) {
             fieldText.text = name + "\n$" + cost;
@@ -84,11 +75,31 @@ public class GameField : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+
     }
 
+    public void SetRent() {
+        if (type == FieldType.Tax) {
+            if (subtype == FieldSubtype.Retake) {
+                rent = 70 * 6;
+            } else {
+                rent = 400;
+            }
+        } else {
+            if (CheckOwnershipOfColor(color)) {
+                foreach (GameField field in GameManager.fields) {
+                    if (field.color == color) {
+                        field.rent = field.cost * 2;
+                        Debug.Log(field.fieldName + " new rent: " + field.rent);
+                    }
+                }
+
+            } else {
+                rent = cost / 2;
+            }
+        }
+    }
     public int GetRent() {
         return rent;
     }
@@ -128,7 +139,7 @@ public class GameField : MonoBehaviour
             color = FieldColor.Yellow;
         } else if (id == 31 || id == 32 || id == 34) {
             color = FieldColor.Green;
-        } else if (id == 37 || id == 39) { 
+        } else if (id == 37 || id == 39) {
             color = FieldColor.Blue;
         } else {
             color = FieldColor.None;
@@ -171,6 +182,22 @@ public class GameField : MonoBehaviour
         } else {
             type = FieldType.None;
         }
+    }
+
+    private bool CheckOwnershipOfColor(FieldColor color) {
+        int totalFieldsOfColor = 0;
+        int ownedFieldsOfColor = 0;
+
+        foreach (GameField field in GameManager.fields) {
+            if (field.GetFieldColor() == color) {
+                totalFieldsOfColor++;
+                if (field.GetOwner() != null && field.GetOwner() == owner) {
+                    ownedFieldsOfColor++;
+                }
+            }
+        }
+
+        return totalFieldsOfColor > 0 && ownedFieldsOfColor == totalFieldsOfColor;
     }
 
 }

@@ -108,6 +108,8 @@ public class Player : MonoBehaviour {
             }
         }
 
+        currentField.SetRent();
+
         properties.Add(property);
     }
 

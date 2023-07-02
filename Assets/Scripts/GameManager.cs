@@ -90,7 +90,6 @@ public class GameManager : MonoBehaviour
 		int randomPlayer = Random.Range(0, players.Count);
 		activePlayer = randomPlayer;
         Info.Instance.ShowMessage(players[activePlayer].playerName + " starts first!");
-		inventoryScript.switchPlayersInventory(activePlayer);
 	}
 
     void Update()
@@ -532,7 +531,7 @@ public class GameManager : MonoBehaviour
                                         state = State.WAITING;
                                     }
                                 }
-                            } else if (fieldType == FieldType.Faculty || fieldType == FieldType.Dorm || fieldType == FieldType.Elevator || fieldType == FieldType.Recreation) {
+                            } else if (fieldType == FieldType.Faculty || fieldType == FieldType.Dorm || fieldType == FieldType.Elevator || fieldType == FieldType.Recreation || fieldType == FieldType.Superpower) {
                                 ActivateObject(ref buyButton, true);
                                 state = State.WAITING;
                             } else if (fieldType == FieldType.Tax) {

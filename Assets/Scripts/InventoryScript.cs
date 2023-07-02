@@ -9,29 +9,26 @@ public class InventoryScript : MonoBehaviour
 {
     [SerializeField] private PathScript fields;
     [SerializeField] private GameObject propertyCard;
-    [SerializeField] private Sprite[] sprites = new Sprite[8];
-    private GameObject[] deck = new GameObject[4];
+    [SerializeField] private Sprite[] sprites = new Sprite[9];
+    [SerializeField] private GameObject[] deck = new GameObject[4];
     private Dictionary<string, bool> showingCard = new Dictionary<string, bool>();
     private Dictionary<int, bool> showingDeck = new Dictionary<int, bool>();
     [SerializeField] private Player[] players = new Player[4];
 
     // Start is called before the first frame update
-    void Start()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            deck[i] = transform.Find("Decks").GetChild(i).gameObject;
-        }
-        switchPlayersInventory(0);
+    void Start() {
+            for (int i = 0; i < 4; i++) {
+                deck[i] = transform.Find("Decks").GetChild(i).gameObject;
+            }
     }
 
     void Update()
     {
-        for(int i = 0; i < 4; i++)
-        {
-            if(showingDeck[i])
-            {
-                transform.Find("MoneyAmount").GetComponent<TMP_Text>().text = "$" + players[i].money.ToString();
+        if (showingDeck.Count > 0) {
+            for (int i = 0; i < 4; i++) {
+                if (showingDeck[i]) {
+                    transform.Find("MoneyAmount").GetComponent<TMP_Text>().text = "$" + players[i].money.ToString();
+                }
             }
         }
     }

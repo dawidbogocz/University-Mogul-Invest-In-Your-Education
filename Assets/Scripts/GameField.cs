@@ -82,7 +82,7 @@ public class GameField : MonoBehaviour {
     public void SetRent() {
         if (type == FieldType.Tax) {
             if (subtype == FieldSubtype.Retake) {
-                rent = 70 * 6;
+                rent = 70;
             } else {
                 rent = 400;
             }

@@ -68,8 +68,15 @@ public class Player : MonoBehaviour {
     {
 		if (currentField.GetFieldType() == FieldType.Tax)
 		{
-			int tax = currentField.GetRent();
-			bool rentPaid = this.DeductMoney(tax);
+            int multiplicator = 1;
+
+            if (currentField.GetFieldSubtype() == FieldSubtype.Retake) {
+                multiplicator = Random.Range(0, 6);
+                Debug.Log(this.playerName + " paid for " + multiplicator + " ECTS");
+            }
+
+            int tax = currentField.GetRent();
+			bool rentPaid = this.DeductMoney(multiplicator * tax);
 			Debug.Log(this.playerName + " paid Tax!");
 		}
 	}

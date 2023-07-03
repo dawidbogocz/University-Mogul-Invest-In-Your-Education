@@ -89,7 +89,8 @@ public class GameManager : MonoBehaviour
 		skipped = false;
 		int randomPlayer = Random.Range(0, players.Count);
 		activePlayer = randomPlayer;
-        Info.Instance.ShowMessage(players[activePlayer].playerName + " starts first!");
+		inventoryScript.switchPlayersInventory(activePlayer);
+		Info.Instance.ShowMessage(players[activePlayer].playerName + " starts first!");
 	}
 
     void Update()
@@ -185,7 +186,6 @@ public class GameManager : MonoBehaviour
 					break;
 				case State.BUYING:
 					{
-						amountOfMoney.text = "$" + players[activePlayer].money.ToString();
 						isBuying = true;
 						if (turnPossible)
 						{
@@ -356,7 +356,7 @@ public class GameManager : MonoBehaviour
 					break;
 				case State.WAITING:
 					{
-						amountOfMoney.text = "$" + players[activePlayer].money.ToString();
+						//amountOfMoney.text = "$" + players[activePlayer].money.ToString();
 					}
 					break;
 				case State.SWITCH_PLAYER: {
@@ -402,7 +402,6 @@ public class GameManager : MonoBehaviour
 					break;
 				case State.BUYING:
 					{
-						amountOfMoney.text = "$" + players[activePlayer].money.ToString();
 						isBuying = true;
                         if (turnPossible) {
                             ActivateObject(ref skipButton, true);
@@ -549,7 +548,7 @@ public class GameManager : MonoBehaviour
 					break;
 				case State.WAITING:
 					{
-						amountOfMoney.text = "$" + players[activePlayer].money.ToString();
+						//amountOfMoney.text = "$" + players[activePlayer].money.ToString();
 					}
 					break;
 				case State.SWITCH_PLAYER:

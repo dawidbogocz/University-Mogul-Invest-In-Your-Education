@@ -337,11 +337,11 @@ public class GameManager : MonoBehaviour
                                     }
                                 }
                             } else if (fieldType == FieldType.Faculty || fieldType == FieldType.Dorm || fieldType == FieldType.Elevator || fieldType == FieldType.Recreation || fieldType == FieldType.Superpower) {
-                                players[activePlayer].BuyPay();
-                                players[activePlayer].PayRent();
+								Info.Instance.ShowMessage(players[activePlayer].BuyPay());
+								Info.Instance.ShowMessage(players[activePlayer].PayRent());
                                 state = State.SWITCH_PLAYER;
                             } else if (fieldType == FieldType.Tax) {
-                                players[activePlayer].Tax();
+								Info.Instance.ShowMessage(players[activePlayer].Tax());
                                 state = State.SWITCH_PLAYER;
                             } else {
                                 state = State.SWITCH_PLAYER;
@@ -534,7 +534,7 @@ public class GameManager : MonoBehaviour
                                 ActivateObject(ref buyButton, true);
                                 state = State.WAITING;
                             } else if (fieldType == FieldType.Tax) {
-                                players[activePlayer].Tax();
+								Info.Instance.ShowMessage(players[activePlayer].Tax());
                                 state = State.WAITING;
                             } else {
                                 state = State.WAITING;
@@ -667,7 +667,7 @@ public class GameManager : MonoBehaviour
 	public void SkipTurn()
 	{
 		ActivateObject(ref skipButton, false);
-		players[activePlayer].PayRent();
+		Info.Instance.ShowMessage(players[activePlayer].PayRent());
 		skipped = true;
 		state = State.SWITCH_PLAYER;
 	}
@@ -675,6 +675,6 @@ public class GameManager : MonoBehaviour
 	{
 		ActivateObject(ref buyButton, false);
 
-        players[activePlayer].BuyPay();
+		Info.Instance.ShowMessage(players[activePlayer].BuyPay());
     }
 }

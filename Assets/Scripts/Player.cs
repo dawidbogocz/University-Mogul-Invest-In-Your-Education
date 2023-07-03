@@ -32,21 +32,23 @@ public class Player : MonoBehaviour {
     }
 
     void Update() {
-        
+
     }
 
-    public void BuyPay() {
+    public string BuyPay() {
         if (currentField.isForSale && currentField.GetOwner() == null) {
             if (this.DeductMoney(currentField.cost)) {
                 currentField.SetOwner(this);
                 this.AddProperty(currentField.id);
                 inventory.addCard(this, currentField.id);
-                Debug.Log(playerName + " bought " + currentField.GetFieldName());
+                return playerName + " bought " + currentField.GetFieldName();
             }
         }
+
+        return "";
     }
 
-    public void PayRent() {
+    public string PayRent() {
         if (currentField.GetOwner() != null && !this.properties.Any(field => field.id == currentField.id)) {
             {
                 Player owner = currentField.GetOwner();
@@ -58,13 +60,15 @@ public class Player : MonoBehaviour {
                         owner.AddMoney(rent);
                     }
 
-                    Debug.Log(this.playerName + " paid rent to " + owner.playerName);
+                    return this.playerName + " paid rent to " + owner.playerName;
                 }
             }
         }
+
+        return "";
     }
 
-    public void Tax()
+    public string Tax()
     {
 		if (currentField.GetFieldType() == FieldType.Tax)
 		{
@@ -72,22 +76,27 @@ public class Player : MonoBehaviour {
 
             if (currentField.GetFieldSubtype() == FieldSubtype.Retake) {
                 multiplicator = Random.Range(0, 6);
-                Debug.Log(this.playerName + " paid for " + multiplicator + " ECTS");
+                return this.playerName + " paid for " + multiplicator + " ECTS";
+            } else {
+                int tax = currentField.GetRent();
+                bool rentPaid = this.DeductMoney(multiplicator * tax);
+                return this.playerName + " paid Tax!";
             }
 
-            int tax = currentField.GetRent();
-			bool rentPaid = this.DeductMoney(multiplicator * tax);
-			Debug.Log(this.playerName + " paid Tax!");
-		}
-	}
+        }
 
-    public void ReachedStart()
+        return "";
+    }
+
+    public string ReachedStart()
     {
 		if (currentField.GetFieldType() == FieldType.Start)
 		{
 			this.AddMoney(400);
-			Debug.Log(playerName + " START +400");
+			return playerName + " START +400";
 		}
+
+        return "";
 	}
     // Money management
     public void AddMoney(int amount) {

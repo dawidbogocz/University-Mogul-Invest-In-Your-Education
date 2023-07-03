@@ -12,7 +12,8 @@ public enum State
 	ROLL_DICE,
 	WAITING,
 	SWITCH_PLAYER,
-	BUYING
+	BUYING,
+	IN_JAIL
 }
 
 public class GameManager : MonoBehaviour
@@ -337,13 +338,18 @@ public class GameManager : MonoBehaviour
                                     }
                                 }
                             } else if (fieldType == FieldType.Faculty || fieldType == FieldType.Dorm || fieldType == FieldType.Elevator || fieldType == FieldType.Recreation || fieldType == FieldType.Superpower) {
-								Info.Instance.ShowMessage(players[activePlayer].BuyPay());
-								Info.Instance.ShowMessage(players[activePlayer].PayRent());
-                                state = State.SWITCH_PLAYER;
+                                Info.Instance.ShowMessage(players[activePlayer].PayRent());
+								if (players[activePlayer].GetCurrentField().GetOwner() == null) {
+									Info.Instance.ShowMessage(players[activePlayer].BuyPay());
+								}
+                                    state = State.SWITCH_PLAYER;
                             } else if (fieldType == FieldType.Tax) {
 								Info.Instance.ShowMessage(players[activePlayer].Tax());
                                 state = State.SWITCH_PLAYER;
-                            } else {
+                            } else if (fieldType == FieldType.StudyBreak) {
+								Info.Instance.ShowMessage(players[activePlayer].GoToJail());
+								state = State.IN_JAIL;
+							} else {
                                 state = State.SWITCH_PLAYER;
                             }
 						}
@@ -364,11 +370,22 @@ public class GameManager : MonoBehaviour
 						{
 							StartCoroutine(SwitchPlayer());
 							state = State.WAITING;
-						}
-					}
+                        }
+                    }
+                    break;
+				case State.IN_JAIL: {
+                        if (players[activePlayer].CanGetOutOfJail()) {
+                            Info.Instance.ShowMessage(players[activePlayer].GetOutOfJail());
+                            state = State.ROLL_DICE;
+                        }
+						else {
+                            players[activePlayer].DecrementJailTurns();
+							state = State.SWITCH_PLAYER;
+                        }
+                    }
 					break;
-			}
-		}
+            }
+        }
 		if (players[activePlayer].playerType == PlayerTypes.HUMAN)
 		{
 			if (players[activePlayer].playerName == "Red")
@@ -536,6 +553,9 @@ public class GameManager : MonoBehaviour
                             } else if (fieldType == FieldType.Tax) {
 								Info.Instance.ShowMessage(players[activePlayer].Tax());
                                 state = State.WAITING;
+                            } else if (fieldType == FieldType.StudyBreak) {
+								Info.Instance.ShowMessage(players[activePlayer].GoToJail());
+								state = State.IN_JAIL;
                             } else {
                                 state = State.WAITING;
                             }
@@ -561,11 +581,21 @@ public class GameManager : MonoBehaviour
 							isBuying = false;
 							StartCoroutine(SwitchPlayer());						
 							state = State.WAITING;
+                        }
+                    }
+                    break;
+				case State.IN_JAIL: {
+						if (players[activePlayer].CanGetOutOfJail()) {
+							Info.Instance.ShowMessage(players[activePlayer].GetOutOfJail());
+							state = State.ROLL_DICE;
+						} else {
+							players[activePlayer].DecrementJailTurns();
+							state = State.SWITCH_PLAYER;
 						}
 					}
 					break;
 			}
-		}
+        }
 	}
 
 	public void RollDice()
@@ -592,7 +622,7 @@ public class GameManager : MonoBehaviour
 
 		if(pawn.Count > 0)
 		{
-			pawn[0].StartTheMove(diceNumber);
+			pawn[0].StartTheMove(30);
 			state = State.WAITING;
 			return;
 		}
@@ -613,8 +643,12 @@ public class GameManager : MonoBehaviour
 
 		SetNextActivePlayer();
 
-		switchingPlayer = false;
-		state = State.ROLL_DICE;
+        switchingPlayer = false;
+		if (players[activePlayer].IsInJail()) {
+			state = State.IN_JAIL;
+		} else {
+			state = State.ROLL_DICE;
+		}
 	}
 
 	void SetNextActivePlayer()

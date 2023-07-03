@@ -15,7 +15,8 @@ public enum FieldType {
     Tax,
     Elevator,
     Prison,
-    Superpower
+    Superpower,
+    StudyBreak
 }
 
 // Enum for the field subtypes
@@ -163,7 +164,7 @@ public class GameField : MonoBehaviour {
             } else {
                 subtype = FieldSubtype.Chance;
             }
-        } else if (id == 10 || id == 20 || id == 30) {
+        } else if (id == 10 || id == 20) {
             type = FieldType.Field;
         } else if (id == 5 || id == 15 || id == 25 || id == 35) {
             type = FieldType.Elevator;
@@ -179,6 +180,8 @@ public class GameField : MonoBehaviour {
             type = FieldType.Start;
         } else if (id == 12 || id == 28) {
             type = FieldType.Superpower;
+        } else if (id == 30) {
+            type = FieldType.StudyBreak;
         } else {
             type = FieldType.None;
         }

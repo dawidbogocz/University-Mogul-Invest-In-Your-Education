@@ -55,7 +55,7 @@ public class Player : MonoBehaviour {
 
                 int rent = currentField.GetRent();
                 bool rentPaid = this.DeductMoney(rent);
-                if (owner != null && owner != this) {
+                if (owner != null && owner != this && owner != isInJail) {
                     if (rentPaid) {
                         owner.AddMoney(rent);
                     }
@@ -147,22 +147,27 @@ public class Player : MonoBehaviour {
         return isInJail;
     }
 
-    public void GoToJail() {
+    public string GoToJail() {
         isInJail = true;
-        jailTurns = 0; // Reset the jail turns counter
+        jailTurns = 3; // Reset the jail turns counter
+        Debug.Log(playerName + " took a leave!");
+        return playerName + " took a leave!";
     }
 
-    public void GetOutOfJail() {
+    public string GetOutOfJail() {
         isInJail = false;
         jailTurns = 0; // Reset the jail turns counter
+        Debug.Log(playerName + " got back!");
+        return playerName + " got back!";
     }
 
-    public void IncrementJailTurns() {
-        jailTurns++;
+    public void DecrementJailTurns() {
+        jailTurns--;
+        Debug.Log("Jail Turns: " + jailTurns);
     }
 
     public bool CanGetOutOfJail() {
-        return jailTurns >= 3; // Player can get out of jail after three turns
+        return jailTurns <= 0; // Player can get out of jail after three turns
     }
 
     public void SetCurrentField(int fieldId) {

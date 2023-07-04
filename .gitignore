@@ -9,6 +9,9 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
+/CG_Project_Data/
+/CG_Project_BurstDebugInformation_DoNotShip/
+/MonoBleedingEdge/
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
 # Uncomment this line if you wish to ignore the asset store tools plugin

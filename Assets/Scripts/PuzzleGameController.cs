@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 using System;
 
@@ -114,7 +115,8 @@ public class PuzzleGameController : MonoBehaviour {
       endText.text = "Time is up you need to pay";
       timerGoing = false;
       System.Threading.Thread.Sleep(1000);
-    }else
+      SceneManager.LoadScene("SampleScene");
+        } else
     {
 
     // On click send out ray to see if we click a piece.

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.IO;
 
 public enum PlayerTypes {
     HUMAN,
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour {
     public string playerName;
     public int money;
     public List<GameField> properties;
+    private int currentFieldId;
     private GameField currentField;
     private GameManager gameManager;
     public bool isInJail;
@@ -24,11 +26,13 @@ public class Player : MonoBehaviour {
     public InventoryScript inventory;
 
     void Start() {
-        playerName = name;
-        money = 1500; // Initial money for each player
-        properties = new List<GameField>();
-        jailTurns = 0;
-        isInJail = false;
+        if (!System.IO.File.Exists("Assets/SaveData/gameState.json")) {
+            playerName = name;
+            money = 1500; // Initial money for each player
+            properties = new List<GameField>();
+            jailTurns = 0;
+            isInJail = false;
+        }
     }
 
     void Update() {
@@ -68,10 +72,8 @@ public class Player : MonoBehaviour {
         return "";
     }
 
-    public string Tax()
-    {
-		if (currentField.GetFieldType() == FieldType.Tax)
-		{
+    public string Tax() {
+        if (currentField.GetFieldType() == FieldType.Tax) {
             int multiplicator = 1;
 
             if (currentField.GetFieldSubtype() == FieldSubtype.Retake) {
@@ -88,16 +90,14 @@ public class Player : MonoBehaviour {
         return "";
     }
 
-    public string ReachedStart()
-    {
-		if (currentField.GetFieldType() == FieldType.Start)
-		{
-			this.AddMoney(400);
-			return playerName + " START +400";
-		}
+    public string ReachedStart() {
+        if (currentField.GetFieldType() == FieldType.Start) {
+            this.AddMoney(400);
+            return playerName + " START +400";
+        }
 
         return "";
-	}
+    }
     // Money management
     public void AddMoney(int amount) {
         money += amount;
@@ -172,14 +172,35 @@ public class Player : MonoBehaviour {
 
     public void SetCurrentField(int fieldId) {
         currentField = GameManager.fields.Find(field => field.id == fieldId);
+        currentFieldId = currentField.id;
     }
 
     public GameField GetCurrentField() {
         return currentField;
     }
 
-    public int GetIdOfCurrentField(){
 
-        return currentField.id;
+    public void SetIdOfCurrentField(int fieldId) {
+        currentFieldId = fieldId;
+    }
+
+    public int GetIdOfCurrentField() {
+
+        return currentFieldId;
+    }
+
+    public List<int> getListOfFieldsId() {
+        List<int> list = new List<int>();
+        foreach (GameField property in properties) {
+            list.Add(property.id);
+
+        }
+        return list;
+    }
+
+    public void BuyFieldsAfterLoading(List<int> gameFields) {
+        foreach (int i in gameFields) {
+            AddProperty(i);
+        }
     }
 }

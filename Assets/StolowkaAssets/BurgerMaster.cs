@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class BurgerMaster : MonoBehaviour
@@ -34,11 +35,15 @@ public class BurgerMaster : MonoBehaviour
             if (plateValue == orderValue) {
                 runningTimer = false;
                 messageText.text = "Congratulations!\nYou don't have to pay.";
+                System.Threading.Thread.Sleep(1000);
+                SceneManager.LoadScene("SampleScene");
             }
 
             if (currentTime <= 0) {
                 runningTimer = false;
                 messageText.text = "You lost!\nYou have to pay.";
+                System.Threading.Thread.Sleep(1000);
+                SceneManager.LoadScene("SampleScene");
             }
         }
     }

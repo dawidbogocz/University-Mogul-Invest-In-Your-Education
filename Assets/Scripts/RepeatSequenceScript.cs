@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class RepeatSequenceScript : MonoBehaviour
@@ -114,6 +115,8 @@ public class RepeatSequenceScript : MonoBehaviour
         acceptingInput = false;
         messegeDisplay.text = "You lost, you have to pay";
         messegeDisplay.gameObject.SetActive(true);
+        System.Threading.Thread.Sleep(1000);
+        SceneManager.LoadScene("SampleScene");
     }
 
     private void playerWon()
@@ -121,6 +124,8 @@ public class RepeatSequenceScript : MonoBehaviour
         acceptingInput = false;
         messegeDisplay.text = "Congratualtion, you don't need to pay";
         messegeDisplay.gameObject.SetActive(true);
+        System.Threading.Thread.Sleep(1000);
+        SceneManager.LoadScene("SampleScene");
     }
 
     private IEnumerator startLevelMessege()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class MazeManager : MonoBehaviour
@@ -55,6 +56,8 @@ public class MazeManager : MonoBehaviour
 		Destroy(lightBeamInstance);
 		UpdateMessageText(message);
 		// Add any additional end game logic here
+		System.Threading.Thread.Sleep(1000);
+		SceneManager.LoadScene("SampleScene");
 	}
 
 	void GenerateTrophy()

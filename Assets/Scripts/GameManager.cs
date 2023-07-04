@@ -60,12 +60,16 @@ public class GameManager : MonoBehaviour {
     private List<string> ChanceTasks;
 
     private void Awake() {
+
         Instance = this;
 
         players[0] = GameObject.Find("Red").GetComponent<Player>();
         players[1] = GameObject.Find("Green").GetComponent<Player>();
         players[2] = GameObject.Find("Blue").GetComponent<Player>();
         players[3] = GameObject.Find("Yellow").GetComponent<Player>();
+
+        if (System.IO.File.Exists("Assets/SaveData/gameState.json"))
+            MapLoadedData();
 
         for (int i = 0; i < players.Count; i++) {
             if (SaveSettings.players[i] == "HUMAN") {
@@ -475,35 +479,40 @@ public class GameManager : MonoBehaviour {
                                     }
                                 }
                             } else if (fieldType == FieldType.Faculty || fieldType == FieldType.Dorm || fieldType == FieldType.Elevator || fieldType == FieldType.Recreation || fieldType == FieldType.Superpower) {
-                                ActivateObject(ref buyButton, true);
-                                if(fieldType == FieldType.Recreation) {
-                                    string fieldName = players[activePlayer].GetCurrentField().GetFieldName();
+                                if (players[activePlayer].GetCurrentField().GetOwner() == null) {
+                                    ActivateObject(ref buyButton, true);
+                                } else if (players[activePlayer].GetCurrentField().GetOwner() != players[activePlayer]) {
+                                    if (fieldType == FieldType.Recreation) {
+                                        string fieldName = players[activePlayer].GetCurrentField().GetFieldName();
 
-                                    switch (fieldName) {
-                                        case "SPIRALA": {
-                                                SwitchScene("Maze");
-                                            }
-                                            break;
-                                        case "PARK": {
-                                                SwitchScene("ParkChrobregoMinigame");
-                                            }
-                                            break;
-                                        case "ZAJADALNIA": {
-                                                SwitchScene("StolowkaMinigame");
-                                            }
-                                            break;
-                                        case "OSIR": {
-                                                SwitchScene("PuzzleGame");
-                                            }
-                                            break;
-                                        case "MROWISKO": {
-                                                SwitchScene("RepeatSequence");
-                                            }
-                                            break;
-                                        case "STOLOWKA": {
-                                                SwitchScene("StolowkaMinigame");
-                                            }
-                                            break;
+                                        switch (fieldName) {
+                                            case "SPIRALA": {
+                                                    SwitchScene("Maze");
+                                                }
+                                                break;
+                                            case "PARK": {
+                                                    SwitchScene("ParkChrobregoMinigame");
+                                                }
+                                                break;
+                                            case "ZAJADALNIA": {
+                                                    SwitchScene("StolowkaMinigame");
+                                                }
+                                                break;
+                                            case "OSIR": {
+                                                    SwitchScene("PuzzleGame");
+                                                }
+                                                break;
+                                            case "MROWISKO": {
+                                                    SwitchScene("RepeatSequence");
+                                                }
+                                                break;
+                                            case "STOLOWKA": {
+                                                    SwitchScene("StolowkaMinigame");
+                                                }
+                                                break;
+                                        }
+                                    } else {
+                                        Info.Instance.ShowMessage(players[activePlayer].PayRent());
                                     }
                                 }
                                 state = State.WAITING;
@@ -639,7 +648,6 @@ public class GameManager : MonoBehaviour {
     }
     public void SkipTurn() {
         ActivateObject(ref skipButton, false);
-        Info.Instance.ShowMessage(players[activePlayer].PayRent());
         skipped = true;
         state = State.SWITCH_PLAYER;
     }

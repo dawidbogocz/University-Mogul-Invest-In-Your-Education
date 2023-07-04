@@ -172,7 +172,6 @@ public class Player : MonoBehaviour {
 
     public void SetCurrentField(int fieldId) {
         currentField = GameManager.fields.Find(field => field.id == fieldId);
-        currentFieldId = currentField.id;
     }
 
     public GameField GetCurrentField() {

@@ -15,7 +15,8 @@ public enum State
 	WAITING,
 	SWITCH_PLAYER,
 	BUYING,
-    IN_JAIL
+    IN_JAIL,
+    MOVE_PLAYERS
 }
 
 public class GameManager : MonoBehaviour {
@@ -76,10 +77,12 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        if (System.IO.File.Exists("Assets/SaveData/gameState.json"))
+        if (System.IO.File.Exists("Assets/SaveData/gameState.json")) {
             MapLoadedData();
+            state = State.MOVE_PLAYERS;
+        }
 
-        Debug.Log("Is data loaded: " + dataLoaded);
+            Debug.Log("Is data loaded: " + dataLoaded);
     }
 
     void Start() {
@@ -329,6 +332,10 @@ public class GameManager : MonoBehaviour {
                         }
                     }
                     break;
+                case State.MOVE_PLAYERS: {
+                        MovePlayersAfterMinigame();
+                    }
+                    break;
             }
         }
         if (players[activePlayer].playerType == PlayerTypes.HUMAN) {
@@ -559,6 +566,10 @@ public class GameManager : MonoBehaviour {
                         }
                     }
                     break;
+                case State.MOVE_PLAYERS: {
+                        MovePlayersAfterMinigame();
+                    }
+                    break;
             }
         }
     }
@@ -583,12 +594,32 @@ public class GameManager : MonoBehaviour {
 
         if (pawn.Count > 0) {
             //go to park
-            pawn[0].StartTheMove(11);
+            pawn[0].StartTheMove(6);
             state = State.WAITING;
             return;
         }
 
         state = State.BUYING;
+    }
+
+    public void MovePlayersAfterMinigame() {
+        for (int j = 0; j < 4; j++) {
+            Debug.Log("Moving " + players[j].playerName + " " + players[j].GetIdOfCurrentField());
+            Info.Instance.ShowMessage(players[j].playerName + " goes to " + players[j].GetIdOfCurrentField());
+            List<PawnScript> pawn = new List<PawnScript>();
+
+            for (int i = 0; i < players[j].myPawn.Length; i++) {
+
+                pawn.Add(players[j].myPawn[i]);
+            }
+
+            if (pawn.Count > 0) {
+                //go to park
+                pawn[0].StartTheMove(players[j].GetIdOfCurrentField());
+            }
+        }
+
+            state = State.ROLL_DICE;
     }
 
 
@@ -749,9 +780,7 @@ public class GameManager : MonoBehaviour {
                 players[i].jailTurns = savedGameState.playersSave[i].jailTurns;
                 players[i].SetIdOfCurrentField(savedGameState.playersSave[i].currentFieldId);
                 players[i].SetCurrentField(savedGameState.playersSave[i].currentFieldId);
-                if (savedGameState.playersSave[i].gameFields.Count > 0) {
-                    players[i].BuyFieldsAfterLoading(savedGameState.playersSave[i].gameFields);
-                }
+                players[i].BuyFieldsAfterLoading(savedGameState.playersSave[i].gameFields);
 
             }
             dataLoaded = true;

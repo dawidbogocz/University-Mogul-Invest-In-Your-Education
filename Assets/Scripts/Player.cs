@@ -33,6 +33,7 @@ public class Player : MonoBehaviour {
             properties = new List<GameField>();
             jailTurns = 0;
             isInJail = false;
+            SetCurrentField(0);
         }
     }
 
@@ -175,6 +176,7 @@ public class Player : MonoBehaviour {
 
     public void SetCurrentField(int fieldId) {
         currentField = GameManager.fields.Find(field => field.id == fieldId);
+        currentFieldId = fieldId;
     }
 
     public GameField GetCurrentField() {

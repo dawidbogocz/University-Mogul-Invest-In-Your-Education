@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
     public TMP_Text amountOfMoney;
 
     private string gameStateFilePath = "Assets/SaveData/gameState.json";
-    bool dataLoaded;
+    public static bool dataLoaded = false;
 
     public List<Player> players = new List<Player>();
     public static List<GameField> fields = new List<GameField>();
@@ -68,9 +68,6 @@ public class GameManager : MonoBehaviour {
         players[2] = GameObject.Find("Blue").GetComponent<Player>();
         players[3] = GameObject.Find("Yellow").GetComponent<Player>();
 
-        if (System.IO.File.Exists("Assets/SaveData/gameState.json"))
-            MapLoadedData();
-
         for (int i = 0; i < players.Count; i++) {
             if (SaveSettings.players[i] == "HUMAN") {
                 players[i].playerType = PlayerTypes.HUMAN;
@@ -78,6 +75,11 @@ public class GameManager : MonoBehaviour {
                 players[i].playerType = PlayerTypes.CPU;
             }
         }
+
+        if (System.IO.File.Exists("Assets/SaveData/gameState.json"))
+            MapLoadedData();
+
+        Debug.Log("Is data loaded: " + dataLoaded);
     }
 
     void Start() {
@@ -747,7 +749,9 @@ public class GameManager : MonoBehaviour {
                 players[i].jailTurns = savedGameState.playersSave[i].jailTurns;
                 players[i].SetIdOfCurrentField(savedGameState.playersSave[i].currentFieldId);
                 players[i].SetCurrentField(savedGameState.playersSave[i].currentFieldId);
-                players[i].BuyFieldsAfterLoading(savedGameState.playersSave[i].gameFields);
+                if (savedGameState.playersSave[i].gameFields.Count > 0) {
+                    players[i].BuyFieldsAfterLoading(savedGameState.playersSave[i].gameFields);
+                }
 
             }
             dataLoaded = true;
@@ -757,7 +761,9 @@ public class GameManager : MonoBehaviour {
 
     private void ResetGameStateFile() {
         if (File.Exists(gameStateFilePath)) {
+            Debug.Log("File Removed");
             File.Delete(gameStateFilePath);
         }
     }
+
 }

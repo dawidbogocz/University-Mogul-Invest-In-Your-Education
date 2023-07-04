@@ -26,7 +26,8 @@ public class Player : MonoBehaviour {
     public InventoryScript inventory;
 
     void Start() {
-        if (!System.IO.File.Exists("Assets/SaveData/gameState.json")) {
+        Debug.Log("Player is data loaded: " + GameManager.dataLoaded);
+        if (!GameManager.dataLoaded) {
             playerName = name;
             money = 1500; // Initial money for each player
             properties = new List<GameField>();
@@ -43,7 +44,7 @@ public class Player : MonoBehaviour {
         if (currentField.isForSale && currentField.GetOwner() == null) {
             if (this.DeductMoney(currentField.cost)) {
                 currentField.SetOwner(this);
-                this.AddProperty(currentField.id);
+                this.AddProperty(currentField.id, false);
                 inventory.addCard(this, currentField.id);
                 return playerName + " bought " + currentField.GetFieldName();
             }
@@ -114,7 +115,7 @@ public class Player : MonoBehaviour {
     }
 
     // Property management
-    public void AddProperty(int fieldId) {
+    public void AddProperty(int fieldId, bool isLoaded) {
         GameField property = null;
 
         foreach (GameField gameField in GameManager.fields) {
@@ -124,7 +125,9 @@ public class Player : MonoBehaviour {
             }
         }
 
-        currentField.SetRent();
+        if (!isLoaded) {
+            currentField.SetRent();
+        }
 
         properties.Add(property);
     }
@@ -199,7 +202,7 @@ public class Player : MonoBehaviour {
 
     public void BuyFieldsAfterLoading(List<int> gameFields) {
         foreach (int i in gameFields) {
-            AddProperty(i);
+            AddProperty(i, true);
         }
     }
 }

@@ -75,11 +75,6 @@ public class GameField : MonoBehaviour {
         GameManager.fields.Add(this);
     }
 
-    // Update is called once per frame
-    void Update() {
-
-    }
-
     public void SetRent() {
         if (type == FieldType.Tax) {
             if (subtype == FieldSubtype.Retake) {

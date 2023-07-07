@@ -10,7 +10,7 @@ public enum PlayerTypes {
 }
 
 public class Player : MonoBehaviour {
-    public PawnScript[] myPawn;
+    public PawnScript myPawn;
     public bool hasTurn;
     public bool hasWon;
     public PlayerTypes playerType;
@@ -148,6 +148,7 @@ public class Player : MonoBehaviour {
     }
 
     public string GoToJail() {
+        myPawn.MoveToField(40);
         isInJail = true;
         jailTurns = 3; // Reset the jail turns counter
         Debug.Log(playerName + " took a leave!");

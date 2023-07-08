@@ -10,7 +10,7 @@ public enum PlayerTypes {
 }
 
 public class Player : MonoBehaviour {
-    public PawnScript[] myPawn;
+    public PawnScript myPawn;
     public bool hasTurn;
     public bool hasWon;
     public PlayerTypes playerType;
@@ -32,55 +32,71 @@ public class Player : MonoBehaviour {
     }
 
     void Update() {
-        
+
     }
 
-    public void BuyPay() {
+    public string BuyPay() {
         if (currentField.isForSale && currentField.GetOwner() == null) {
             if (this.DeductMoney(currentField.cost)) {
                 currentField.SetOwner(this);
                 this.AddProperty(currentField.id);
                 inventory.addCard(this, currentField.id);
-                Debug.Log(playerName + " bought " + currentField.GetFieldName());
+                return playerName + " bought " + currentField.GetFieldName();
             }
         }
+
+        return "";
     }
 
-    public void PayRent() {
+    public string PayRent() {
         if (currentField.GetOwner() != null && !this.properties.Any(field => field.id == currentField.id)) {
             {
                 Player owner = currentField.GetOwner();
 
                 int rent = currentField.GetRent();
                 bool rentPaid = this.DeductMoney(rent);
-                if (owner != null && owner != this) {
+                if (owner != null && owner != this && owner != isInJail) {
                     if (rentPaid) {
                         owner.AddMoney(rent);
                     }
 
-                    Debug.Log(this.playerName + " paid rent to " + owner.playerName);
+                    return this.playerName + " paid rent to " + owner.playerName;
                 }
             }
         }
+
+        return "";
     }
 
-    public void Tax()
+    public string Tax()
     {
 		if (currentField.GetFieldType() == FieldType.Tax)
 		{
-			int tax = currentField.GetRent();
-			bool rentPaid = this.DeductMoney(tax);
-			Debug.Log(this.playerName + " paid Tax!");
-		}
-	}
+            int multiplicator = 1;
 
-    public void ReachedStart()
+            if (currentField.GetFieldSubtype() == FieldSubtype.Retake) {
+                multiplicator = Random.Range(0, 6);
+                return this.playerName + " paid for " + multiplicator + " ECTS";
+            } else {
+                int tax = currentField.GetRent();
+                bool rentPaid = this.DeductMoney(multiplicator * tax);
+                return this.playerName + " paid Tax!";
+            }
+
+        }
+
+        return "";
+    }
+
+    public string ReachedStart()
     {
 		if (currentField.GetFieldType() == FieldType.Start)
 		{
 			this.AddMoney(400);
-			Debug.Log(playerName + " START +400");
+			return playerName + " START +400";
 		}
+
+        return "";
 	}
     // Money management
     public void AddMoney(int amount) {
@@ -108,6 +124,8 @@ public class Player : MonoBehaviour {
             }
         }
 
+        currentField.SetRent();
+
         properties.Add(property);
     }
 
@@ -129,22 +147,29 @@ public class Player : MonoBehaviour {
         return isInJail;
     }
 
-    public void GoToJail() {
+    public string GoToJail() {
+        myPawn.MoveToField(40);
         isInJail = true;
-        jailTurns = 0; // Reset the jail turns counter
+        jailTurns = 3; // Reset the jail turns counter
+        Debug.Log(playerName + " took a leave!");
+        return playerName + " took a leave!";
     }
 
-    public void GetOutOfJail() {
-        isInJail = false;
+    public string GetOutOfJail() {
+		myPawn.MoveToField(0);
+		isInJail = false;
         jailTurns = 0; // Reset the jail turns counter
+        Debug.Log(playerName + " got back!");
+        return playerName + " got back!";
     }
 
-    public void IncrementJailTurns() {
-        jailTurns++;
+    public void DecrementJailTurns() {
+        jailTurns--;
+        Debug.Log("Jail Turns: " + jailTurns);
     }
 
     public bool CanGetOutOfJail() {
-        return jailTurns >= 3; // Player can get out of jail after three turns
+        return jailTurns <= 0; // Player can get out of jail after three turns
     }
 
     public void SetCurrentField(int fieldId) {

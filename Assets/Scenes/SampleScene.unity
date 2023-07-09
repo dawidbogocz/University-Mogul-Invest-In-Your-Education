@@ -2096,8 +2096,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0, y: 0.9636305, z: -0.26723832, w: 0}
-  m_LocalPosition: {x: 0, y: 10, z: 20}
+  m_LocalRotation: {x: 0.26723832, y: 0, z: 0, w: 0.9636305}
+  m_LocalPosition: {x: 0, y: 10, z: -20}
   m_LocalScale: {x: 0.15000004, y: 0.15000002, z: 0.15000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2226,7 +2226,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 364336648}
-  m_LocalRotation: {x: -0.17112023, y: -0.77606034, z: -0.5927605, w: -0.13070285}
+  m_LocalRotation: {x: -0.17112023, y: -0.77606034, z: -0.59276056, w: -0.13070282}
   m_LocalPosition: {x: -0.41, y: -1.487, z: 1.04}
   m_LocalScale: {x: 0.5000002, y: 0.5000001, z: 0.5000001}
   m_ConstrainProportionsScale: 0
@@ -2551,7 +2551,7 @@ MonoBehaviour:
   myPawn: {fileID: 487923638}
   hasTurn: 0
   hasWon: 0
-  playerType: 1
+  playerType: 0
   playerName: 
   money: 0
   properties: []
@@ -3287,7 +3287,7 @@ MonoBehaviour:
   myPawn: {fileID: 635280500}
   hasTurn: 0
   hasWon: 0
-  playerType: 1
+  playerType: 0
   playerName: 
   money: 0
   properties: []
@@ -5888,7 +5888,7 @@ MonoBehaviour:
   myPawn: {fileID: 1239148767}
   hasTurn: 0
   hasWon: 0
-  playerType: 1
+  playerType: 0
   playerName: 
   money: 0
   properties: []

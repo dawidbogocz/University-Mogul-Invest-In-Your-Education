@@ -82,22 +82,6 @@ public class PawnScript : MonoBehaviour
         transform.DOMoveY(nextPosition.y, duration * 0.25f).SetDelay(duration * 0.5f).SetEase(Ease.InQuad);
 
         yield return new WaitForSeconds(duration);
-        //player.ReachedStart();
-
-        /*if (diceNumber < 6)
-		{
-			GameManager.Instance.state = State.BUYING;
-		}
-		else if (diceNumber == 6)
-		{
-			GameManager.Instance.state = State.ROLL_DICE;
-		}
-		else
-		{
-			GameManager.Instance.state = State.SWITCH_PLAYER;
-		}*/
-
-        //player.Action();
     }
 
     public void MoveForward(int diceNumber)

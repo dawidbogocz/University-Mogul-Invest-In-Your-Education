@@ -484,7 +484,10 @@ public class GameManager : MonoBehaviour
                             }
                             else if (fieldType == FieldType.Faculty || fieldType == FieldType.Dorm || fieldType == FieldType.Elevator || fieldType == FieldType.Recreation || fieldType == FieldType.Superpower)
                             {
-                                ActivateObject(ref buyButton, true);
+                                if(players[activePlayer].GetCurrentField().GetOwner() == null)
+                                {
+									ActivateObject(ref buyButton, true);
+								}
                                 state = State.WAITING;
                             }
                             else if (fieldType == FieldType.Tax)

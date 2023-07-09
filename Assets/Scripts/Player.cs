@@ -10,6 +10,7 @@ public enum PlayerTypes {
 }
 
 public class Player : MonoBehaviour {
+    public int id;
     public PawnScript myPawn;
     public bool hasTurn;
     public bool hasWon;
@@ -40,7 +41,7 @@ public class Player : MonoBehaviour {
             if (this.DeductMoney(currentField.cost)) {
                 currentField.SetOwner(this);
                 this.AddProperty(currentField.id);
-                inventory.addCard(this, currentField.id);
+                inventory.AddCard(id, currentField.id);
                 return playerName + " bought " + currentField.GetFieldName();
             }
         }
@@ -101,11 +102,13 @@ public class Player : MonoBehaviour {
     // Money management
     public void AddMoney(int amount) {
         money += amount;
+        inventory.UpdateMoney(id, money);
     }
 
     public bool DeductMoney(int amount) {
         if (money >= amount) {
             money -= amount;
+            inventory.UpdateMoney(id, money);
             return true;
         } else {
             Debug.Log("Insufficient funds!");
@@ -156,7 +159,8 @@ public class Player : MonoBehaviour {
     }
 
     public string GetOutOfJail() {
-        isInJail = false;
+		myPawn.MoveToField(0);
+		isInJail = false;
         jailTurns = 0; // Reset the jail turns counter
         Debug.Log(playerName + " got back!");
         return playerName + " got back!";

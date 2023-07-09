@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
         skipped = false;
         int randomPlayer = Random.Range(0, players.Count);
         activePlayer = randomPlayer;
-        inventoryScript.switchPlayersInventory(activePlayer);
+        inventoryScript.SwitchInventory(activePlayer);
         Info.Instance.ShowMessage(players[activePlayer].playerName + " starts first!");
     }
 
@@ -102,83 +102,25 @@ public class GameManager : MonoBehaviour
     {
         if (players[activePlayer].playerType == PlayerTypes.CPU)
         {
-            switch (players[activePlayer].playerName)
-            {
-                case "Red":
-                    if (Red.transform.rotation == Quaternion.Euler(0f, 0f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam1);
-                    }
-                    else if (Red.transform.rotation == Quaternion.Euler(0f, 90f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam2);
-                    }
-                    else if (Red.transform.rotation == Quaternion.Euler(0f, 180f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam3);
-                    }
-                    else if (Red.transform.rotation == Quaternion.Euler(0f, 270f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam4);
-                    }
-                    break;
-                case "Green":
-                    if (Green.transform.rotation == Quaternion.Euler(0f, 0f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam1);
-                    }
-                    else if (Green.transform.rotation == Quaternion.Euler(0f, 90f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam2);
-                    }
-                    else if (Green.transform.rotation == Quaternion.Euler(0f, 180f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam3);
-                    }
-                    else if (Green.transform.rotation == Quaternion.Euler(0f, 270f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam4);
-                    }
-                    break;
-                case "Blue":
-                    if (Blue.transform.rotation == Quaternion.Euler(0f, 0f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam1);
-                    }
-                    else if (Blue.transform.rotation == Quaternion.Euler(0f, 90f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam2);
-                    }
-                    else if (Blue.transform.rotation == Quaternion.Euler(0f, 180f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam3);
-                    }
-                    else if (Blue.transform.rotation == Quaternion.Euler(0f, 270f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam4);
-                    }
-                    break;
-                case "Yellow":
-                    if (Yellow.transform.rotation == Quaternion.Euler(0f, 0f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam1);
-                    }
-                    else if (Yellow.transform.rotation == Quaternion.Euler(0f, 90f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam2);
-                    }
-                    else if (Yellow.transform.rotation == Quaternion.Euler(0f, 180f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam3);
-                    }
-                    else if (Yellow.transform.rotation == Quaternion.Euler(0f, 270f, 0f))
-                    {
-                        cameraScript.SwitchCamera(cameraScript.cam4);
-                    }
-                    break;
-            }
 
-            switch (state)
+			if (Quaternion.Angle(players[activePlayer].transform.rotation, Quaternion.Euler(0f, 0f, 0f)) < 0.1f)
+			{
+				cameraScript.SwitchCamera(cameraScript.cam1);
+			}
+			else if (Quaternion.Angle(players[activePlayer].transform.rotation, Quaternion.Euler(0f, 90f, 0f)) < 0.1f)
+			{
+				cameraScript.SwitchCamera(cameraScript.cam2);
+			}
+			else if (Quaternion.Angle(players[activePlayer].transform.rotation, Quaternion.Euler(0f, 180f, 0f)) < 0.1f)
+			{
+				cameraScript.SwitchCamera(cameraScript.cam3);
+			}
+			else if (Quaternion.Angle(players[activePlayer].transform.rotation, Quaternion.Euler(0f, 270f, 0f)) < 0.1f)
+			{
+				cameraScript.SwitchCamera(cameraScript.cam4);
+			}
+
+			switch (state)
             {
                 case State.ROLL_DICE:
                     {
@@ -691,7 +633,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         Info.Instance.ShowMessage(players[activePlayer].playerName + "'s turn!");
-        inventoryScript.switchPlayersInventory(activePlayer);
+        inventoryScript.SwitchInventory(activePlayer);
         state = State.ROLL_DICE;
     }
 

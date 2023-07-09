@@ -10,80 +10,88 @@ public class InventoryScript : MonoBehaviour
     [SerializeField] private PathScript fields;
     [SerializeField] private GameObject propertyCard;
     [SerializeField] private Sprite[] sprites = new Sprite[9];
+    private GameObject[] inventory = new GameObject[4];
+    private int[] money = new int[4];
+    private int[] previousMoney = new int[4];
+    private GameObject[] moneyDisplay = new GameObject[4];
     private GameObject[] deck = new GameObject[4];
+    private int selectedInventory;
     private Dictionary<string, bool> showingCard = new Dictionary<string, bool>();
-    private Dictionary<int, bool> showingDeck = new Dictionary<int, bool>();
-    [SerializeField] private Player[] players = new Player[4];
 
     // Start is called before the first frame update
-    void Start() 
+    void Start()
     {
-        for (int i = 0; i < 4; i++) 
+        inventory[0] = transform.Find("RedInventory").gameObject;
+        inventory[1] = transform.Find("GreenInventory").gameObject;
+        inventory[2] = transform.Find("BlueInventory").gameObject;
+        inventory[3] = transform.Find("YellowInventory").gameObject;
+        for (int i = 0; i < 4; i++)
         {
-            deck[i] = transform.Find("Decks").GetChild(i).gameObject;
+            moneyDisplay[i] = inventory[i].transform.Find("Money").gameObject;
+            deck[i] = inventory[i].transform.Find("Deck").gameObject;
+            money[i] = 1500;
+            previousMoney[i] = 1500;
         }
         //StartCoroutine(test());
     }
-
     private IEnumerator test()
     {
         yield return new WaitForSeconds(1);
-        addCard(players[0], 1);
-        addCard(players[0], 3);
-        addCard(players[0], 6);
-        addCard(players[0], 8);
-        addCard(players[0], 9);
-        addCard(players[0], 11);
-        addCard(players[0], 13);
-        addCard(players[0], 14);
-        addCard(players[0], 16);
-        addCard(players[0], 18);
-        addCard(players[0], 19);
-        addCard(players[0], 21);
-        addCard(players[0], 23);
-        addCard(players[0], 24);
-        addCard(players[0], 26);
-        addCard(players[0], 27);
-        addCard(players[0], 29);
-        addCard(players[0], 31);
-        addCard(players[0], 32);
-        addCard(players[0], 34);
-        addCard(players[0], 37);
-        addCard(players[0], 39);
-        addCard(players[0], 5);
-        addCard(players[0], 12);
-        addCard(players[0], 15);
-        addCard(players[0], 25);
-        addCard(players[0], 28);
-        addCard(players[0], 35);
+        AddCard(0, 1);
+        AddCard(0, 3);
+        AddCard(0, 6);
+        AddCard(0, 8);
+        AddCard(0, 9);
+        AddCard(0, 11);
+        AddCard(0, 13);
+        AddCard(0, 14);
+        AddCard(0, 16);
+        AddCard(0, 18);
+        AddCard(0, 19);
+        AddCard(0, 21);
+        AddCard(0, 23);
+        AddCard(0, 24);
+        AddCard(0, 26);
+        AddCard(0, 27);
+        AddCard(0, 29);
+        AddCard(0, 31);
+        AddCard(0, 32);
+        AddCard(0, 34);
+        AddCard(0, 37);
+        AddCard(0, 39);
+        AddCard(0, 5);
+        AddCard(0, 12);
+        AddCard(0, 15);
+        AddCard(0, 25);
+        AddCard(0, 28);
+        AddCard(0, 35);
     }
 
     void Update()
     {
-        if (showingDeck.Count > 0) {
+        /*for (int i = 0; i < 4; i++)
+        {
+            if (players[i].money != money[i])
+            {
+                UpdateMoney(i, players[i].money);
+            }
+        }*/
+        /*if (showingDeck.Count > 0) {
             for (int i = 0; i < 4; i++) {
                 if (showingDeck[i]) {
-                    transform.Find("MoneyAmount").GetComponent<TMP_Text>().text = "$" + players[i].money.ToString();
+                    transform.Find("Money").GetComponent<TMP_Text>().text = "$" + players[i].money.ToString();
                 }
             }
-        }
+        }*/
     }
 
-    public void addCard(Player player, int cardID)
+    public void AddCard(int playerID, int fieldID)
     {
-        int playerID = 0;
-        for(int i = 0; i < 4; i++)
-        {
-            if(player == players[i])
-            {
-                playerID = i;
-            }
-        }
         GameObject card = Instantiate(propertyCard);
         GameObject cardSprite = card.transform.Find("Card").gameObject;
-        GameObject field = fields.transform.GetChild(cardID).gameObject;
+        GameObject field = fields.transform.GetChild(fieldID).gameObject;
 
-        cardSprite.GetComponent<Image>().sprite = sprites[((int)field.GetComponent<GameField>().GetFieldColor())];
+        cardSprite.GetComponent<Image>().sprite = sprites[(int)field.GetComponent<GameField>().GetFieldColor()];
 
         card.transform.SetParent(deck[playerID].transform, false);
 
@@ -104,124 +112,156 @@ public class InventoryScript : MonoBehaviour
         EventTrigger trigger = card.GetComponentInParent<EventTrigger>();
         EventTrigger.Entry entry1 = new EventTrigger.Entry();
         entry1.eventID = EventTriggerType.PointerEnter;
-        entry1.callback.AddListener( (eventData) => { showCard(card); } );
+        entry1.callback.AddListener((eventData) => { ShowCard(card); });
         trigger.triggers.Add(entry1);
         EventTrigger.Entry entry2 = new EventTrigger.Entry();
         entry2.eventID = EventTriggerType.PointerExit;
-        entry2.callback.AddListener((eventData) => { hideCard(card); });
+        entry2.callback.AddListener((eventData) => { HideCard(card); });
         trigger.triggers.Add(entry2);
 
         showingCard[card.name] = false;
-        StartCoroutine(moveCardLeft(card, 0));
+        StartCoroutine(MoveCardLeft(card, 0));
     }
 
-    public void switchPlayersInventory(int playerID)
+    public void SwitchInventory(int playerID)
     {
+        selectedInventory = playerID;
         for (int i = 0; i < 4; i++)
-		{
+        {
             ColorBlock colors = transform.Find("InventoryButtons").GetChild(i).GetComponent<Button>().colors;
             if (i == playerID)
-			{
+            {
 
-				colors.normalColor = new Color(1, 1, 1);
-                showingDeck[i] = true;
-                StartCoroutine(moveDeckLeft(i));
+                colors.normalColor = new Color(1, 1, 1);
+                StartCoroutine(MoveInventoryLeft(i));
             }
-			else
-			{
-				colors.normalColor = new Color(0.25f, 0.25f, 0.25f);
-                showingDeck[i] = false;
-                StartCoroutine(moveDeckRight(i));
+            else
+            {
+                colors.normalColor = new Color(0.25f, 0.25f, 0.25f);
+                StartCoroutine(MoveInventoryRight(i));
             }
             transform.Find("InventoryButtons").GetChild(i).GetComponent<Button>().colors = colors;
-		}
+        }
     }
 
-    private IEnumerator moveDeckLeft(int deckID)
+    private IEnumerator MoveInventoryLeft(int inventoryID)
     {
-        if(deck[deckID] == null)
+        if (inventory[inventoryID] == null)
         {
             yield return new WaitForSeconds(1);
         }
-        Vector3 currentPosition = deck[deckID].transform.localPosition;
-        Vector3 targetPosition = deck[deckID].transform.localPosition;
+        Vector3 currentPosition = inventory[inventoryID].transform.localPosition;
+        Vector3 targetPosition = currentPosition;
         targetPosition.x = 0;
         float i = 0;
-        showingDeck[deckID] = true;
 
-        while (showingDeck[deckID] == true && deck[deckID].transform.localPosition.x > targetPosition.x)
+        while (selectedInventory == inventoryID && inventory[inventoryID].transform.localPosition.x > targetPosition.x)
         {
             float t = (Mathf.Sin(Mathf.Clamp(i, 0, Mathf.PI / 2)));
-            deck[deckID].transform.localPosition = Vector3.Lerp(deck[deckID].transform.localPosition, targetPosition, t);
-            i += 0.01f;
+            inventory[inventoryID].transform.localPosition = Vector3.Lerp(currentPosition, targetPosition, t);
+            i += Time.deltaTime * 2f;
             yield return null;
         }
     }
 
-    private IEnumerator moveDeckRight(int deckID)
+    private IEnumerator MoveInventoryRight(int inventoryID)
     {
-        if (deck[deckID] == null)
+        if (inventory[inventoryID] == null)
         {
             yield return new WaitForSeconds(1);
         }
-        Vector3 currentPosition = deck[deckID].transform.localPosition;
-        Vector3 targetPosition = deck[deckID].transform.localPosition;
+        Vector3 currentPosition = inventory[inventoryID].transform.localPosition;
+        Vector3 targetPosition = currentPosition;
         targetPosition.x = 300;
-        float i = Mathf.PI / 2;
-        showingDeck[deckID] = false;
+        float i = 0;
 
-        while (showingDeck[deckID] == false && deck[deckID].transform.localPosition.x < targetPosition.x)
+        while (selectedInventory != inventoryID && inventory[inventoryID].transform.localPosition.x < targetPosition.x)
         {
             float t = (Mathf.Sin(Mathf.Clamp(i, 0, Mathf.PI / 2)));
-            deck[deckID].transform.localPosition = Vector3.Lerp(targetPosition, deck[deckID].transform.localPosition, t);
-            i -= 0.01f;
+            inventory[inventoryID].transform.localPosition = Vector3.Lerp(currentPosition, targetPosition, t);
+            i += Time.deltaTime * 2f;
             yield return null;
         }
     }
 
-    public void showCard(GameObject card)
+    public void ShowCard(GameObject card)
     {
-        StartCoroutine(moveCardLeft(card, -130));
+        StartCoroutine(MoveCardLeft(card, -130));
     }
 
-    private IEnumerator moveCardLeft(GameObject cardObject, int targetX)
+    private IEnumerator MoveCardLeft(GameObject cardObject, int targetX)
     {
         Transform card = cardObject.transform.Find("Card");
         Vector3 currentPosition = card.transform.localPosition;
-        Vector3 targetPosition = card.transform.localPosition;
+        Vector3 targetPosition = currentPosition;
         targetPosition.x = targetX;
         float i = 0;
         showingCard[cardObject.name] = true;
 
         while (showingCard[cardObject.name] == true && card.transform.localPosition.x > targetPosition.x)
         {
-            float t = (Mathf.Sin(Mathf.Clamp(i, 0, Mathf.PI/2)));
-            card.transform.localPosition = Vector3.Lerp(card.transform.localPosition, targetPosition, t);
-            i += 0.01f;
+            float t = (Mathf.Sin(Mathf.Clamp(i, 0, Mathf.PI / 2)));
+            card.transform.localPosition = Vector3.Lerp(currentPosition, targetPosition, t);
+            i += Time.deltaTime * 2f;
             yield return null;
         }
     }
 
-    public void hideCard(GameObject card)
+    public void HideCard(GameObject card)
     {
-        StartCoroutine(moveCardRight(card, 0));
+        StartCoroutine(MoveCardRight(card, 0));
     }
 
-    private IEnumerator moveCardRight(GameObject cardObject, int targetX)
+    private IEnumerator MoveCardRight(GameObject cardObject, int targetX)
     {
         Transform card = cardObject.transform.Find("Card");
         Vector3 currentPosition = card.transform.localPosition;
-        Vector3 targetPosition = card.transform.localPosition;
+        Vector3 targetPosition = currentPosition;
         targetPosition.x = targetX;
-        float i = Mathf.PI / 2;
+        float i = 0;
         showingCard[cardObject.name] = false;
 
         while (showingCard[cardObject.name] == false && card.transform.localPosition.x < targetPosition.x)
         {
             float t = (Mathf.Sin(Mathf.Clamp(i, 0, Mathf.PI / 2)));
-            card.transform.localPosition = Vector3.Lerp(targetPosition, card.transform.localPosition, t);
-            i -= 0.01f;
+            card.transform.localPosition = Vector3.Lerp(currentPosition, targetPosition, t);
+            i += Time.deltaTime * 2f;
             yield return null;
         }
     }
-}
+
+    public void UpdateMoney(int playerID, int newAmount)
+    {
+        money[playerID] = newAmount;
+        if (playerID == selectedInventory)
+        {
+            StartCoroutine(UpdateMoneyCoroutine(playerID));
+        }
+        else
+        {
+            previousMoney[playerID] = newAmount;
+        }
+    }
+
+    private IEnumerator UpdateMoneyCoroutine(int playerID)
+    {
+        if (previousMoney[playerID] < money[playerID])
+        {
+            while (previousMoney[playerID] < money[playerID])
+            {
+                previousMoney[playerID]++;
+                moneyDisplay[playerID].GetComponent<TMP_Text>().text = "$" + previousMoney[playerID].ToString();
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+        else
+        {
+            while (previousMoney[playerID] > money[playerID])
+            {
+                previousMoney[playerID]--;
+                moneyDisplay[playerID].GetComponent<TMP_Text>().text = "$" + previousMoney[playerID].ToString();
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+        }
+    }

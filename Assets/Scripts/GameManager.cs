@@ -157,9 +157,7 @@ public class GameManager : MonoBehaviour
                                     }
                                     else if (RiskTasks[randomIndex].Contains("BREAK"))
                                     {
-
                                         MovePlayerToField(30);
-                                        state = State.SWITCH_PLAYER;
                                     }
                                 }
                                 else if (RiskTasks[randomIndex].Contains("COLLECT"))
@@ -199,8 +197,7 @@ public class GameManager : MonoBehaviour
                                     }
                                 }
                             }
-
-                            if (fieldSubtype == FieldSubtype.Chance)
+                            else if (fieldSubtype == FieldSubtype.Chance)
                             {
                                 var randomIndex = Random.Range(0, ChanceTasks.Count);
                                 Debug.Log(ChanceTasks[randomIndex]);
@@ -420,8 +417,7 @@ public class GameManager : MonoBehaviour
                                     }
                                 }
                             }
-
-                            if (fieldSubtype == FieldSubtype.Chance)
+                            else if (fieldSubtype == FieldSubtype.Chance)
                             {
                                 ActivateObject(ref cardInfo, true);
                                 var randomIndex = Random.Range(0, ChanceTasks.Count);
@@ -484,7 +480,10 @@ public class GameManager : MonoBehaviour
                             }
                             else if (fieldType == FieldType.Faculty || fieldType == FieldType.Dorm || fieldType == FieldType.Elevator || fieldType == FieldType.Recreation || fieldType == FieldType.Superpower)
                             {
-                                ActivateObject(ref buyButton, true);
+                                if (players[activePlayer].GetCurrentField().GetOwner() == null)
+                                {
+                                    ActivateObject(ref buyButton, true);
+                                }
                                 state = State.WAITING;
                             }
                             else if (fieldType == FieldType.Tax)
@@ -563,7 +562,7 @@ public class GameManager : MonoBehaviour
 
         if (pawn != null)
         {
-            pawn.MoveForward(diceNumber);
+            pawn.MoveToField(30);
             state = State.WAITING;
             return;
         }
@@ -598,6 +597,8 @@ public class GameManager : MonoBehaviour
         SetNextActivePlayer();
 
         switchingPlayer = false;
+        inventoryScript.SwitchInventory(activePlayer);
+
         if (players[activePlayer].IsInJail())
         {
             state = State.IN_JAIL;
@@ -633,7 +634,6 @@ public class GameManager : MonoBehaviour
             return;
         }
         Info.Instance.ShowMessage(players[activePlayer].playerName + "'s turn!");
-        inventoryScript.SwitchInventory(activePlayer);
         state = State.ROLL_DICE;
     }
 
@@ -659,7 +659,6 @@ public class GameManager : MonoBehaviour
     {
         ActivateObject(ref skipButton, false);
         Info.Instance.ShowMessage(players[activePlayer].PayRent());
-        skipped = true;
         state = State.SWITCH_PLAYER;
     }
     public void BuyProperty()

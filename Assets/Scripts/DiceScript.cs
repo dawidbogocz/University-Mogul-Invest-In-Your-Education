@@ -30,7 +30,7 @@ public class DiceScript : MonoBehaviour
             thrown = true;
             rb.useGravity = true;
             rb.AddTorque(Random.Range(1,25), Random.Range(1, 25), Random.Range(1, 25));
-            rb.AddForce(Random.Range(-5, 5), 80, Random.Range(-5, 5));
+            rb.AddForce(Random.Range(-5, 5), Random.Range(60, 80), Random.Range(-5, 5));
         }
         else if(thrown && hasLanded) 
         {
@@ -69,7 +69,7 @@ public class DiceScript : MonoBehaviour
         thrown = true;
         rb.useGravity = true;
         rb.AddTorque(Random.Range(1, 25), Random.Range(1, 25), Random.Range(1, 25));
-        rb.AddForce(Random.Range(-5, 5), 80, Random.Range(-5, 5));
+        rb.AddForce(Random.Range(-5, 5), Random.Range(60, 80), Random.Range(-5, 5));
     }
 
     void SideValueCheck()
